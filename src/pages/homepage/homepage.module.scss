@@ -1,0 +1,101 @@
+.header {
+	display: grid;
+	width: 100%;
+	grid-template: auto / 1fr 1fr;
+
+	img {
+		width: 500px;
+		height: 500px;
+	}
+
+	.rightDiv {
+		grid-column: 2/3;
+		justify-self: center;
+		align-self: center;
+
+		h3 {
+			font-size: 65px;
+			line-height: 70px;
+			font-weight: 700;
+		}
+	}
+}
+
+.leagues {
+	display: grid;
+	width: 100%;
+	grid-template: auto / 1fr 1fr 1fr;
+	justify-content: center;
+
+	.leagueCard {
+		justify-self: center;	
+		align-self: center;
+	}
+}
+
+.allRaces {
+	display: grid;
+	width: 100%;
+  grid-template: 1fr 1fr / 1fr 1fr;
+  margin-top: 56px;
+	
+  padding: 16px;
+  min-height: 460px;
+
+	.racesLeft {
+		grid-column: 1/2;
+		
+		justify-content: center;
+		align-items: center;
+		display:flex;
+    h3 {
+			font-size: 55px;
+			color: black;
+			line-height: 65px;
+			font-weight: 700;
+    }
+	}
+
+	.racesRight {
+		grid-column: 2/3;
+		justify-content: center;
+		align-items: center;
+		display:flex;
+		background-color: black;
+		padding: 16px;
+	}
+
+	.racesBottomLeft {
+		background-color: black;
+	}
+	.racesBottomRight {
+		grid-column: 2/3;
+		justify-content: center;
+		align-items: center;
+		display:flex;
+		padding: 16px;
+	}
+}
+
+.highlight {
+	font-style: normal;
+	border-radius: 1em 0 1em 0;
+	text-shadow: 1px 1px 1px #fff;
+	background-image:
+		linear-gradient(-100deg,
+			rgba(150, 213, 255, 0.15),
+			rgba(150, 222, 255, 0.8) 100%,
+			rgba(150, 222, 255, 0.25));
+}
+
+.highlightYellow {
+  font-style: normal;
+  border-radius: 1em 0 1em 0;
+  text-shadow: 1px 1px 1px #fff;
+  background-image: 
+    linear-gradient(-100deg, 
+      rgba(202, 202, 202, 0.15),
+      rgba(187, 187, 187, 0.8) 100%, 
+      rgba(160, 160, 160, 0.25)
+    );
+}

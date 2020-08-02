@@ -12,14 +12,17 @@ const Navbar = () => {
         </NavLink>
       </NavItem>
       <NavItem>
-        <NavLink href="#" className={classes.navLink}>Link</NavLink>
+        <NavLink href="#" className={classes.navLink}>Rules</NavLink>
       </NavItem>
       <NavItem>
-        <NavLink href="#" className={classes.navLink}>Another Link</NavLink>
+        <NavLink href="#" className={classes.navLink}>Leagues</NavLink>
+      </NavItem>  
+      <NavItem>
+        <NavLink href="#" className={classes.navLink} disabled>Forum</NavLink>
       </NavItem>  
       <NavItem>
         <NavLink disabled href="#">
-          Disabled Link
+          Discord
         </NavLink>
       </NavItem>
     </Nav>
