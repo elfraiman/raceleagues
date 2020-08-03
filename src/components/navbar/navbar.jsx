@@ -5,7 +5,7 @@ import { Nav, NavItem, NavLink, NavbarBrand, Navbar } from "shards-react";
 const TopNavBar = () => {
   return (
     <Navbar type="light" expand="md">
-      <NavbarBrand href="#">SPOOLRACING.</NavbarBrand>
+      <NavbarBrand href="#" ><span className={classes.brand}>SPOOLRACING.</span></NavbarBrand>
       <Nav justified>
         <NavItem>
           <NavLink active href="/" className={classes.navLink}>

@@ -8,7 +8,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import moment from 'moment';
-
+import { Button } from "shards-react";
 
 const database = firebase.firestore();
 
@@ -56,7 +56,10 @@ const RacePage = () => {
             <h5><span>Track Length:</span> <br />{trackData.trackLength}</h5>
             <h5><span>Number of turns:</span> <br />{trackData.numberOfTurns}</h5>
             <h5><span>Real lap record:</span> <br />{trackData.lapRealRecord}</h5>
-            <h5><span>Race date:</span> <br /> {moment(raceData.raceDate.toDate(), "en").format("LLLL, UTCZZ")}</h5>
+            <h5><span>Max perticipants:</span> <br />{raceData.perticipants}</h5>
+            <h5><span>Race length:</span> <br />{raceData.raceLengthMinutes / 60} Hours</h5>
+            <h5><span>Race date:</span> <br /> {moment(raceData.raceDate.toDate(), "en").format("LLLL, UTCZZ")} <a href="https://time.is/UTC+2">Current utc+2 time</a></h5>
+            <h5><span>Category:</span> <br />{raceData.category}</h5>
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -78,10 +81,12 @@ const RacePage = () => {
               </AccordionSummary>
 
               <AccordionDetails>
-                <iframe width="100%" height="400px" src="https://www.youtube.com/embed/xXa8Ltr_rOo?controls=0&amp;start=6" frameBorder="0" allow="autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+              <iframe width="560" height="315" src={raceData.onboard} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </AccordionDetails>
             </Accordion>
           </div>
+
+          <Button className={classes.registerButton} onClick={() => window.open("")}>Join Race</Button>
         </div>
 
         : <LinearProgress />}

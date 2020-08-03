@@ -62,21 +62,21 @@ const HomePage = () => {
           onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
           onMouseLeave={() => set({ xys: [0, 0, 1] })}
           style={{ transform: props.xys.interpolate(trans) }}>
-          <LeagueCard header="GT3 RL League" body="Offical RaceLeagues 5 race GT3 league" image={amgGtPic} button="More info" footer="Silver License" />
+          <LeagueCard header="SPOOLRACING GT3 Rookie League" body="Offical RaceLeagues 5 race GT3 league" image={amgGtPic} button="More info" footer="Silver License" />
         </animated.div>
 
         <animated.div className={classes.leagueCard}
           onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
           onMouseLeave={() => set({ xys: [0, 0, 1] })}
           style={{ transform: props.xys.interpolate(trans) }}>
-          <LeagueCard header="GT4 RL League" title="100$ Prize" body="Offical RaceLeagues 5 race GT4 league" image={gt4Cars} button="Join" footer="Silver License" />
+          <LeagueCard header="SPOOLRACING GT4 Rookie League" title="100$ Prize" body="Offical RaceLeagues 5 race GT4 league" image={gt4Cars} button="Join" footer="Silver License" />
         </animated.div>
 
         <animated.div className={classes.leagueCard}
           onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
           onMouseLeave={() => set({ xys: [0, 0, 1] })}
           style={{ transform: props.xys.interpolate(trans) }}>
-          <LeagueCard header="FANATEC Mixed League" body="Fanatec 10 race GT3 league" image={mclarenGt3} button="Join" footer="Gold License" />
+          <LeagueCard header="FANATEC GT3 Pro League" body="Fanatec 10 race GT3 league" image={mclarenGt3} button="Join" footer="Gold License" />
         </animated.div>
       </div>
 
@@ -138,7 +138,7 @@ const HomePage = () => {
               }}
             >
               {(props) => (
-                <div style={{ ...props }} className={classes.racesBottomLeft}>
+                <div style={{ ...props }} className={classes.racesBottomLeft} onClick={() => navigateToRace("3hoursofpaulricard")}>
                   <img src={paulricard3gt3} alt="paulricard3hours" />
                 </div>
               )}

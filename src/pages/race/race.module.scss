@@ -21,6 +21,9 @@
     .trackMap {
       grid-column: 1/2;
       grid-row: 2/3;
+      img {
+        width: 800px;
+      }
     }
 
     .trackData {
@@ -39,6 +42,10 @@
            font-size: 13px;
          }
        }
+    }
+
+    .registerButton {
+      grid-column: 2/4;
     }
   }
 }
