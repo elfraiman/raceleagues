@@ -8,7 +8,7 @@ const TopNavBar = () => {
       <NavbarBrand href="#">SPOOLRACING.</NavbarBrand>
       <Nav justified>
         <NavItem>
-          <NavLink active href="#" className={classes.navLink}>
+          <NavLink active href="/" className={classes.navLink}>
             Home
         </NavLink>
         </NavItem>

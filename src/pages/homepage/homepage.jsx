@@ -11,6 +11,7 @@ import mclarenGt3 from '../../assets/images/mclaren-acc.jpg';
 import spa3mixed from '../../assets/images/spa3hoursmixed.jpg';
 import LeagueCard from '../../components/league-card/leagueCard';
 import classes from './homepage.module.scss';
+import { useHistory } from 'react-router-dom';
 
 const calc = (x, y) => [-(y - window.innerHeight / 2) / 20, (x - window.innerWidth / 2) / 60, 1.02]
 const trans = (x, y, s) => `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`
@@ -18,7 +19,11 @@ const trans = (x, y, s) => `perspective(600px) rotateX(${x}deg) rotateY(${y}deg)
 const HomePage = () => {
   const [props, set] = useSpring(() => ({ xys: [0, 0, 1], config: { mass: 0.5, tension: 250, friction: 20 } }))
   const fadeIn = useSpring({ opacity: 1, from: { opacity: 0 } })
+  const history = useHistory();
 
+  const navigateToRace = (race) => {
+    history.push(`/race/${race}`);
+  }
   return (
     <React.Fragment>
       <animated.div style={fadeIn} className={classes.header}>
@@ -113,8 +118,8 @@ const HomePage = () => {
               }}
             >
               {(props) => (
-                <div style={{ ...props }} className={classes.racesTopRight}>
-                  <img src={spa3mixed} alt="spa3hours" />
+                <div style={{ ...props }} className={classes.racesTopRight} onClick={() => navigateToRace("3hoursofspa")}>
+                  <img src={spa3mixed} alt="3hoursofspa"  />
                 </div>
               )}
             </Spring>

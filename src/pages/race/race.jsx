@@ -37,12 +37,12 @@ const RacePage = () => {
       {raceData && trackData ?
         <div className={classes.main}>
           <span className={classes.title}>
-            <img src={trackData.flag} /> {raceData.title}
+            <img src={trackData.flag} alt="track country flag"/> {raceData.title}
             </span>
 
 
           <div className={classes.trackMap}>
-            <img src={trackData.img} />
+            <img src={trackData.img} alt="track layout" />
           </div>
 
           <div className={classes.trackData}>
