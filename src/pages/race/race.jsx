@@ -7,7 +7,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
-import Typography from '@material-ui/core/Typography';
+import moment from 'moment';
 
 
 const database = firebase.firestore();
@@ -56,21 +56,29 @@ const RacePage = () => {
             <h5><span>Track Length:</span> <br />{trackData.trackLength}</h5>
             <h5><span>Number of turns:</span> <br />{trackData.numberOfTurns}</h5>
             <h5><span>Real lap record:</span> <br />{trackData.lapRealRecord}</h5>
-
+            <h5><span>Race date:</span> <br /> {moment(raceData.raceDate.toDate(), "en").format("LLLL, UTCZZ")}</h5>
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
               >
                 <h6 className={classes.heading}>Registered Racers</h6>
               </AccordionSummary>
               <AccordionDetails>
                 <p>
                   #88 Elan Fraiman <br />
-                  #76 Bob Hayje <br/>
-                  #12 Kelly van der laan
-                  </p>
+                  #76 Bob Hayje <br />
+                  #12 Kelly van der laan <br />
+                </p>
+              </AccordionDetails>
+            </Accordion>
+
+            <Accordion>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <h6 className={classes.heading}>Onboard Lap</h6>
+              </AccordionSummary>
+
+              <AccordionDetails>
+                <iframe width="100%" height="400px" src="https://www.youtube.com/embed/xXa8Ltr_rOo?controls=0&amp;start=6" frameBorder="0" allow="autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
               </AccordionDetails>
             </Accordion>
           </div>
