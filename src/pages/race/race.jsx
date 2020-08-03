@@ -18,9 +18,11 @@ const RacePage = () => {
           if (document.data().name === race) {
             const race = document.data();
             setRaceData(race);
-            setTrack(race.track);
+
+            database.collection('tracks').doc(race.track).get().then(response => {
+              setTrack(response.data());
+            })
           }
-          console.log(document.data());
         });
       })
       .catch(error => {
@@ -28,10 +30,28 @@ const RacePage = () => {
       });
   }, [])
 
+  console.log(trackData, raceData);
+
   return (
     <div className={classes.racePage}>
-      {raceData ?
-        <h2>{raceData.title}</h2>
+      {raceData && trackData ?
+        <div className={classes.main}>
+          <span className={classes.title}>
+            <img src={trackData.flag} /> {raceData.title}
+            </span>
+
+
+          <div className={classes.trackMap}>
+            <img src={trackData.img} />
+          </div>
+
+          <div className={classes.trackData}>
+            <h5><span>Track Length:</span> <br/>{trackData.trackLength}</h5>
+            <h5><span>Number of turns:</span> <br/>{trackData.numberOfTurns}</h5>
+            <h5><span>Real lap record:</span> <br/>{trackData.lapRealRecord}</h5>
+          </div>
+        </div>
+
         : <LinearProgress />}
     </div>
   );
