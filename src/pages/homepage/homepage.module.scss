@@ -42,7 +42,7 @@
   padding: 16px;
   min-height: 460px;
 
-	.racesLeft {
+	.racesTopLeft {
 		grid-column: 1/2;
 		
 		justify-content: center;
@@ -56,17 +56,24 @@
     }
 	}
 
-	.racesRight {
+	.racesTopRight {
 		grid-column: 2/3;
 		justify-content: center;
 		align-items: center;
 		display:flex;
 		background-color: black;
-		padding: 16px;
+
+		img {
+			width: 100%;
+		}
 	}
 
 	.racesBottomLeft {
 		background-color: black;
+
+		img {
+			width: 100%;
+		}
 	}
 	.racesBottomRight {
 		grid-column: 2/3;

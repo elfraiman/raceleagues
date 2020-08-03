@@ -1,16 +1,19 @@
 import React from 'react';
-import Navbar from '../../components/navbar/navbar';
-import classes from './homepage.module.scss';
-import formulaPic from '../../assets/images/formula-e.png';
+
+import paulricard3gt3 from '../../assets/images/3hourspaulricard.jpg';
 import amgGtPic from '../../assets/images/amggt3.jpg';
-import LeagueCard from '../../components/league-card/leagueCard';
+import formulaPic from '../../assets/images/formula-e.png';
 import gt4Cars from '../../assets/images/gt4cars.jpg';
 import mclarenGt3 from '../../assets/images/mclaren-acc.jpg';
+import spa3mixed from '../../assets/images/spa3hoursmixed.jpg';
+import LeagueCard from '../../components/league-card/leagueCard';
+import TopNavBar from '../../components/navbar/navbar';
+import classes from './homepage.module.scss';
 
 const HomePage = () => {
   return (
     <React.Fragment>
-      <Navbar />
+      <TopNavBar />
       <div className={classes.header}>
         <img src={formulaPic} alt="formula-e" />
 
@@ -32,27 +35,28 @@ const HomePage = () => {
         </div>
 
         <div className={classes.leagueCard}>
-          <LeagueCard header="FANATEC GT3 League" body="Fanatec 10 race GT3 league" image={mclarenGt3} button="Join" footer="Gold License" />
+          <LeagueCard header="FANATEC Mixed League" body="Fanatec 10 race GT3 league" image={mclarenGt3} button="Join" footer="Gold License" />
         </div>
       </div>
 
       <div className={classes.allRaces}>
-        <div className={classes.racesLeft}>
+        <div className={classes.racesTopLeft}>
           <h3>
             Meet fellow racers, make friends, race together and
             help grow the online sim-racers community!
           </h3>
         </div>
-        <div className={classes.racesRight}>
-          
+
+        <div className={classes.racesTopRight}>
+          <img src={spa3mixed} alt="spa3hours" />
         </div>
 
         <div className={classes.racesBottomLeft}>
-          
+          <img src={paulricard3gt3} alt="paulricard3hours" />
         </div>
 
         <div className={classes.racesBottomRight}>
-        <iframe src="https://discordapp.com/widget?id=739559664458661960&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+        <iframe title="discord-widget" src="https://discordapp.com/widget?id=739559664458661960&theme=dark" width="350" height="400" allowtransparency="true" frameBorder="false" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </div>
       </div>
     </React.Fragment>

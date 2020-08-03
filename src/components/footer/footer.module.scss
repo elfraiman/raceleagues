@@ -1,0 +1,43 @@
+.footer {
+  background-color: black;
+  width: 100vw;
+  height: 200px;
+
+  display: grid;
+  grid-template: 1fr / 1fr 1fr 1fr;
+
+  .left {
+    grid-column: 1/2;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    h3 {
+      color: white;
+      font-weight: 700;
+    }
+  }
+
+  .center {
+    grid-column: 2/3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      color: white;
+      font-size: 13px;
+      text-align: center;
+    }
+  }
+
+  .right {
+    grid-column: 3/4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h3 {
+      color: white;
+    }
+  }
+}
