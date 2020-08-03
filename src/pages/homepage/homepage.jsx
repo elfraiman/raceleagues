@@ -58,7 +58,7 @@ const HomePage = () => {
         </div>
       </animated.div>
 
-      <h2 style={{ textAlign: "center", marginBottom: 36 }}>Upcoming events</h2>
+      <h2 style={{ textAlign: "center", marginBottom: 36, marginTop: 36 }}>Upcoming events</h2>
       <VisibilitySensor partialVisibility>
         {({ isVisible }) => (
           <Spring
@@ -76,6 +76,7 @@ const HomePage = () => {
                     body="Offical SPOOLRACING GT3 league"
                     date="Starting August 29 at 08:00PM UTC+2"
                     type="League"
+                    class="GT3"
                     image={amgGtPic}
                     button="More info"
                     footer="Rookie"
@@ -87,6 +88,7 @@ const HomePage = () => {
                     date="Starting August 29 at 08:00PM UTC+2"
                     type="League"
                     body="Offical SPOOLRACING Rookie GT4 league"
+                    class="GT4"
                     image={gt4Cars}
                     button="Join"
                     footer="Rookie"
@@ -98,6 +100,7 @@ const HomePage = () => {
                     body="Fanatec 10 race GT3 league"
                     date="Starting September 1 at 08:00PM UTC+2"
                     type="League"
+                    class="GT3"
                     image={mclarenGt3}
                     button="Join"
                     footer="Pro"
