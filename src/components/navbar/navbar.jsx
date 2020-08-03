@@ -1,9 +1,9 @@
-import { isEmpty } from 'lodash';
-import React, { useContext } from 'react';
-import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from 'shards-react';
+import { isEmpty } from "lodash";
+import React, { useContext } from "react";
+import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from "shards-react";
 
-import UserProvider, { UserContext } from '../../providers/Router/userProvider';
-import classes from './navbar.module.scss';
+import UserProvider, { UserContext } from "../../providers/Router/userProvider";
+import classes from "./navbar.module.scss";
 
 const InnerTopNavBar = () => {
   const userProvider = useContext(UserContext);
@@ -44,17 +44,11 @@ const InnerTopNavBar = () => {
 
       {!isEmpty(userProvider.user) ? (
         <div className={classes.user}>
-          <img src={userProvider.user.photoURL} alt="your profile"/>
+          <img src={userProvider.user.photoURL} alt="your profile" />
           {userProvider.user.displayName}
         </div>
       ) : (
-        <div className={classes.user}>
-          <NavItem>
-            <NavLink disabled href="#">
-              Log in
-            </NavLink>
-          </NavItem>
-        </div>
+        <div className={classes.user}>Log in</div>
       )}
     </Navbar>
   );
