@@ -10,13 +10,7 @@ const InnerTopNavBar = () => {
 
   console.log(userProvider, "user provider");
   return (
-    <Navbar
-      type="light"
-      expand="md"
-      full="true"
-      sticky="top"
-      className={classes.main}
-    >
+    <Navbar type="light" expand="md" sticky="top" className={classes.main}>
       <NavbarBrand href="#">
         <span className={classes.brand}>SPOOLRACING.</span>
       </NavbarBrand>
@@ -50,10 +44,18 @@ const InnerTopNavBar = () => {
 
       {!isEmpty(userProvider.user) ? (
         <div className={classes.user}>
-          <img src={userProvider.user.photoURL} />
+          <img src={userProvider.user.photoURL} alt="your profile"/>
           {userProvider.user.displayName}
         </div>
-      ) : null}
+      ) : (
+        <div className={classes.user}>
+          <NavItem>
+            <NavLink disabled href="#">
+              Log in
+            </NavLink>
+          </NavItem>
+        </div>
+      )}
     </Navbar>
   );
 };
