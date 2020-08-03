@@ -1,4 +1,7 @@
 import React from 'react';
+import { animated, useSpring } from 'react-spring';
+import { Spring } from 'react-spring/renderprops';
+import VisibilitySensor from 'react-visibility-sensor';
 
 import paulricard3gt3 from '../../assets/images/3hourspaulricard.jpg';
 import amgGtPic from '../../assets/images/amggt3.jpg';
@@ -7,11 +10,7 @@ import gt4Cars from '../../assets/images/gt4cars.jpg';
 import mclarenGt3 from '../../assets/images/mclaren-acc.jpg';
 import spa3mixed from '../../assets/images/spa3hoursmixed.jpg';
 import LeagueCard from '../../components/league-card/leagueCard';
-import TopNavBar from '../../components/navbar/navbar';
 import classes from './homepage.module.scss';
-import { useSpring, animated } from 'react-spring'
-import VisibilitySensor from "react-visibility-sensor";
-import { Spring } from "react-spring/renderprops";
 
 const calc = (x, y) => [-(y - window.innerHeight / 2) / 20, (x - window.innerWidth / 2) / 60, 1.02]
 const trans = (x, y, s) => `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`
@@ -19,16 +18,30 @@ const trans = (x, y, s) => `perspective(600px) rotateX(${x}deg) rotateY(${y}deg)
 const HomePage = () => {
   const [props, set] = useSpring(() => ({ xys: [0, 0, 1], config: { mass: 0.5, tension: 250, friction: 20 } }))
   const fadeIn = useSpring({ opacity: 1, from: { opacity: 0 } })
-  function onChange(isVisible) {
-    console.log('Element is now %s', isVisible ? 'visible' : 'hidden');
-  }
 
   return (
     <React.Fragment>
-      <TopNavBar />
       <animated.div style={fadeIn} className={classes.header}>
 
-        <img src={formulaPic} alt="formula-e" />
+      <VisibilitySensor partialVisibility>
+            {({ isVisible }) => (
+              <Spring
+                delay={400}
+                to={{
+                  opacity: isVisible ? 1 : 0,
+                  transform: isVisible
+                    ? "translateX(0)"
+                    : "translateX(-400px)",
+                }}
+              >
+                {(props) => (
+                 <img style={{ ...props }}src={formulaPic} alt="formula-e" />
+                )}
+              </Spring>
+
+            )}
+          </VisibilitySensor>
+        
 
         <div className={classes.rightDiv}>
           <h3>
@@ -63,13 +76,11 @@ const HomePage = () => {
       </div>
 
       <div className={classes.allRaces}>
-
         <div className={classes.racesTopLeft}>
-
           <VisibilitySensor partialVisibility>
             {({ isVisible }) => (
               <Spring
-                delay={200}
+                delay={300}
                 to={{
                   opacity: isVisible ? 1 : 0,
                   transform: isVisible
@@ -93,7 +104,7 @@ const HomePage = () => {
         <VisibilitySensor partialVisibility>
           {({ isVisible }) => (
             <Spring
-              delay={200}
+              delay={500}
               to={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible
@@ -113,7 +124,7 @@ const HomePage = () => {
         <VisibilitySensor partialVisibility>
           {({ isVisible }) => (
             <Spring
-              delay={300}
+              delay={400}
               to={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible
@@ -130,13 +141,10 @@ const HomePage = () => {
           )}
         </VisibilitySensor>
 
-
-
-
         <VisibilitySensor partialVisibility>
           {({ isVisible }) => (
             <Spring
-              delay={300}
+              delay={400}
               to={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible

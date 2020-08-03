@@ -2,7 +2,7 @@
 	display: grid;
 	width: 100%;
 	grid-template: auto / 1fr 1fr;
-
+	padding-right: 16px;
 	img {
 		width: 500px;
 		height: 500px;
@@ -54,7 +54,6 @@
 			line-height: 65px;
 			font-weight: 700;
 			will-change: transform, opacity;
-			
     }
 	}
 
