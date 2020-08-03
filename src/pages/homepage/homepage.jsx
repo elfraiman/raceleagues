@@ -93,12 +93,12 @@ const HomePage = () => {
         <VisibilitySensor partialVisibility>
           {({ isVisible }) => (
             <Spring
-              delay={400}
+              delay={200}
               to={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible
-                  ? "translateY(0)"
-                  : "translateY(200px)",
+                  ? "translateX(0)"
+                  : "translateX(600px)",
               }}
             >
               {(props) => (
@@ -140,8 +140,8 @@ const HomePage = () => {
               to={{
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible
-                  ? "translateX(0px)"
-                  : "translateX(200px)",
+                  ? "translateY(0px)"
+                  : "translateY(200px)",
               }}
             >
               {(props) => (
