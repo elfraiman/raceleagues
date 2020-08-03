@@ -50,7 +50,7 @@ const HomePage = () => {
 
         <div className={classes.rightDiv}>
           <h3>
-            Join one of our offical racing <em className={classes.highlight}>Leagues</em> no matter your skill level, we have a league for you.
+            Join one of our offical racing <em className={classes.highlight}>Leagues</em> no matter your skill level, we have a race for you.
           </h3>
         </div>
 
@@ -62,21 +62,21 @@ const HomePage = () => {
           onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
           onMouseLeave={() => set({ xys: [0, 0, 1] })}
           style={{ transform: props.xys.interpolate(trans) }}>
-          <LeagueCard header="SPOOLRACING GT3 Rookie League" body="Offical RaceLeagues 5 race GT3 league" image={amgGtPic} button="More info" footer="Silver License" />
+          <LeagueCard header="SPOOLRACING GT3 Rookie League" body="Offical SPOOLRACING Rookie GT3 league" image={amgGtPic} button="More info" footer="Rookie" />
         </animated.div>
 
         <animated.div className={classes.leagueCard}
           onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
           onMouseLeave={() => set({ xys: [0, 0, 1] })}
           style={{ transform: props.xys.interpolate(trans) }}>
-          <LeagueCard header="SPOOLRACING GT4 Rookie League" title="100$ Prize" body="Offical RaceLeagues 5 race GT4 league" image={gt4Cars} button="Join" footer="Silver License" />
+          <LeagueCard header="SPOOLRACING GT4 Rookie League" title="100$ Prize" body="Offical SPOOLRACING Rookie GT4 league" image={gt4Cars} button="Join" footer="Rookie" />
         </animated.div>
 
         <animated.div className={classes.leagueCard}
           onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
           onMouseLeave={() => set({ xys: [0, 0, 1] })}
           style={{ transform: props.xys.interpolate(trans) }}>
-          <LeagueCard header="FANATEC GT3 Pro League" body="Fanatec 10 race GT3 league" image={mclarenGt3} button="Join" footer="Gold License" />
+          <LeagueCard header="FANATEC GT3 Pro League" body="Fanatec 10 race GT3 league" image={mclarenGt3} button="Join" footer="Pro"/>
         </animated.div>
       </div>
 

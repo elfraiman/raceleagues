@@ -58,7 +58,7 @@ const RacePage = () => {
             <h5><span>Real lap record:</span> <br />{trackData.lapRealRecord}</h5>
             <h5><span>Max perticipants:</span> <br />{raceData.perticipants}</h5>
             <h5><span>Race length:</span> <br />{raceData.raceLengthMinutes / 60} Hours</h5>
-            <h5><span>Race date:</span> <br /> {moment(raceData.raceDate.toDate(), "en").format("LLLL, UTCZZ")} <a href="https://time.is/UTC+2">Current utc+2 time</a></h5>
+            <h5><span>Race date:</span> <br /> {moment(raceData.raceDate.toDate(), "en").format("LLLL, UTCZZ")} <a href="https://time.is/UTC+2">Check UTC+2</a></h5>
             <h5><span>Category:</span> <br />{raceData.category}</h5>
             <Accordion>
               <AccordionSummary
@@ -81,12 +81,12 @@ const RacePage = () => {
               </AccordionSummary>
 
               <AccordionDetails>
-              <iframe width="560" height="315" src={raceData.onboard} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              <iframe width="560" title="onboard" height="315" src={raceData.onboard} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </AccordionDetails>
             </Accordion>
           </div>
 
-          <Button className={classes.registerButton} onClick={() => window.open("")}>Join Race</Button>
+          <Button className={classes.registerButton}>Join Race</Button>
         </div>
 
         : <LinearProgress />}

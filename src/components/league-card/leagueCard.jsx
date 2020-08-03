@@ -9,7 +9,7 @@ import {
   CardFooter
 } from "shards-react";
 
-const LeagueCard = ({ header, title, body, image, license }) => {
+const LeagueCard = ({ header, title, body, image, license, footer }) => {
   return (
     <Card className={classes.card}>
       <CardHeader>{header}</CardHeader>
@@ -18,15 +18,7 @@ const LeagueCard = ({ header, title, body, image, license }) => {
         <CardTitle>{title}</CardTitle>
         <p>{body}</p>
       </CardBody>
-      <CardFooter style={{
-        color: 'white',
-        backgroundColor:
-          license === 'bronze' ? '#CD7F32'
-            : license === 'silver'
-              ? '#aaa9ad' : license === 'gold'
-                ? '#FFD700' : license === 'platinum'
-                  ? '#e5e4e2' : null
-      }}></CardFooter>
+      <CardFooter style={{fontWeight: "700"}}>{footer ? footer : null}</CardFooter>
     </Card>
   )
 };
