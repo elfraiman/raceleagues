@@ -11,7 +11,7 @@ import TopNavBar from '../../components/navbar/navbar';
 import classes from './homepage.module.scss';
 import { useSpring, animated } from 'react-spring'
 
-const calc = (x, y) => [-(y - window.innerHeight / 2) / 20, (x - window.innerWidth / 2) / 20, 1.1]
+const calc = (x, y) => [-(y - window.innerHeight / 2) / 20, (x - window.innerWidth / 2) / 60, 1.02]
 const trans = (x, y, s) => `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`
 
 const HomePage = () => {
@@ -43,16 +43,16 @@ const HomePage = () => {
         </animated.div>
 
         <animated.div className={classes.leagueCard}
-        onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
-        onMouseLeave={() => set({ xys: [0, 0, 1] })}
-        style={{ transform: props.xys.interpolate(trans) }}>
+          onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
+          onMouseLeave={() => set({ xys: [0, 0, 1] })}
+          style={{ transform: props.xys.interpolate(trans) }}>
           <LeagueCard header="GT4 RL League" title="100$ Prize" body="Offical RaceLeagues 5 race GT4 league" image={gt4Cars} button="Join" footer="Silver License" />
         </animated.div>
 
         <animated.div className={classes.leagueCard}
-        onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
-        onMouseLeave={() => set({ xys: [0, 0, 1] })}
-        style={{ transform: props.xys.interpolate(trans) }}>
+          onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
+          onMouseLeave={() => set({ xys: [0, 0, 1] })}
+          style={{ transform: props.xys.interpolate(trans) }}>
           <LeagueCard header="FANATEC Mixed League" body="Fanatec 10 race GT3 league" image={mclarenGt3} button="Join" footer="Gold License" />
         </animated.div>
       </div>
