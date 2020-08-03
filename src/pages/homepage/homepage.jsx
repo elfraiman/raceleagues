@@ -9,12 +9,20 @@ import spa3mixed from '../../assets/images/spa3hoursmixed.jpg';
 import LeagueCard from '../../components/league-card/leagueCard';
 import TopNavBar from '../../components/navbar/navbar';
 import classes from './homepage.module.scss';
+import { useSpring, animated } from 'react-spring'
+
+const calc = (x, y) => [-(y - window.innerHeight / 2) / 20, (x - window.innerWidth / 2) / 20, 1.1]
+const trans = (x, y, s) => `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`
 
 const HomePage = () => {
+  const [props, set] = useSpring(() => ({ xys: [0, 0, 1], config: { mass: 0.5, tension: 250, friction: 20 } }))
+  const fadeIn = useSpring({ opacity: 1, from: { opacity: 0 } })
+
   return (
     <React.Fragment>
       <TopNavBar />
-      <div className={classes.header}>
+      <animated.div style={fadeIn} className={classes.header}>
+
         <img src={formulaPic} alt="formula-e" />
 
         <div className={classes.rightDiv}>
@@ -22,21 +30,31 @@ const HomePage = () => {
             Join one of our offical racing <em className={classes.highlight}>Leagues</em> no matter your skill level, we have a league for you.
           </h3>
         </div>
-      </div>
+
+      </animated.div>
 
       <div className={classes.leagues}>
 
-        <div className={classes.leagueCard}>
+        <animated.div className={classes.leagueCard}
+          onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
+          onMouseLeave={() => set({ xys: [0, 0, 1] })}
+          style={{ transform: props.xys.interpolate(trans) }}>
           <LeagueCard header="GT3 RL League" body="Offical RaceLeagues 5 race GT3 league" image={amgGtPic} button="More info" footer="Silver License" />
-        </div>
+        </animated.div>
 
-        <div className={classes.leagueCard}>
+        <animated.div className={classes.leagueCard}
+        onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
+        onMouseLeave={() => set({ xys: [0, 0, 1] })}
+        style={{ transform: props.xys.interpolate(trans) }}>
           <LeagueCard header="GT4 RL League" title="100$ Prize" body="Offical RaceLeagues 5 race GT4 league" image={gt4Cars} button="Join" footer="Silver License" />
-        </div>
+        </animated.div>
 
-        <div className={classes.leagueCard}>
+        <animated.div className={classes.leagueCard}
+        onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
+        onMouseLeave={() => set({ xys: [0, 0, 1] })}
+        style={{ transform: props.xys.interpolate(trans) }}>
           <LeagueCard header="FANATEC Mixed League" body="Fanatec 10 race GT3 league" image={mclarenGt3} button="Join" footer="Gold License" />
-        </div>
+        </animated.div>
       </div>
 
       <div className={classes.allRaces}>
@@ -56,7 +74,7 @@ const HomePage = () => {
         </div>
 
         <div className={classes.racesBottomRight}>
-        <iframe title="discord-widget" src="https://discordapp.com/widget?id=739559664458661960&theme=dark" width="350" height="400" allowtransparency="true" frameBorder="false" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+          <iframe title="discord-widget" src="https://discordapp.com/widget?id=739559664458661960&theme=dark" width="350" height="400" allowtransparency="true" frameBorder="false" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </div>
       </div>
     </React.Fragment>
