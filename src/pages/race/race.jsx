@@ -3,6 +3,13 @@ import classes from './race.module.scss';
 import firebase from '../../firebase.js';
 import { useParams } from 'react-router-dom';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Typography from '@material-ui/core/Typography';
+
+
 const database = firebase.firestore();
 
 const RacePage = () => {
@@ -37,8 +44,8 @@ const RacePage = () => {
       {raceData && trackData ?
         <div className={classes.main}>
           <span className={classes.title}>
-            <img src={trackData.flag} alt="track country flag"/> {raceData.title}
-            </span>
+            <img src={trackData.flag} alt="track country flag" /> {raceData.title}
+          </span>
 
 
           <div className={classes.trackMap}>
@@ -46,9 +53,26 @@ const RacePage = () => {
           </div>
 
           <div className={classes.trackData}>
-            <h5><span>Track Length:</span> <br/>{trackData.trackLength}</h5>
-            <h5><span>Number of turns:</span> <br/>{trackData.numberOfTurns}</h5>
-            <h5><span>Real lap record:</span> <br/>{trackData.lapRealRecord}</h5>
+            <h5><span>Track Length:</span> <br />{trackData.trackLength}</h5>
+            <h5><span>Number of turns:</span> <br />{trackData.numberOfTurns}</h5>
+            <h5><span>Real lap record:</span> <br />{trackData.lapRealRecord}</h5>
+
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <h6 className={classes.heading}>Registered Racers</h6>
+              </AccordionSummary>
+              <AccordionDetails>
+                <p>
+                  #88 Elan Fraiman <br />
+                  #76 Bob Hayje <br/>
+                  #12 Kelly van der laan
+                  </p>
+              </AccordionDetails>
+            </Accordion>
           </div>
         </div>
 
