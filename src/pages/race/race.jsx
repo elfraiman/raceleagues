@@ -81,7 +81,7 @@ const RacePage = () => {
               </AccordionSummary>
 
               <AccordionDetails>
-              <iframe width="560" title="onboard" height="315" src={raceData.onboard} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              <iframe width="100%" title="onboard" height="315" src={raceData.onboard} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
               </AccordionDetails>
             </Accordion>
           </div>

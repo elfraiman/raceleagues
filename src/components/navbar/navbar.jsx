@@ -1,34 +1,69 @@
-import React from 'react';
-import classes from './navbar.module.scss';
-import { Nav, NavItem, NavLink, NavbarBrand, Navbar } from "shards-react";
+import { isEmpty } from 'lodash';
+import React, { useContext } from 'react';
+import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from 'shards-react';
 
-const TopNavBar = () => {
+import UserProvider, { UserContext } from '../../providers/Router/userProvider';
+import classes from './navbar.module.scss';
+
+const InnerTopNavBar = () => {
+  const userProvider = useContext(UserContext);
+
+  console.log(userProvider, "user provider");
   return (
-    <Navbar type="light" expand="md">
-      <NavbarBrand href="#" ><span className={classes.brand}>SPOOLRACING.</span></NavbarBrand>
+    <Navbar
+      type="light"
+      expand="md"
+      full="true"
+      sticky="top"
+      className={classes.main}
+    >
+      <NavbarBrand href="#">
+        <span className={classes.brand}>SPOOLRACING.</span>
+      </NavbarBrand>
       <Nav justified>
         <NavItem>
           <NavLink active href="/" className={classes.navLink}>
             Home
-        </NavLink>
+          </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#" className={classes.navLink}>Rules</NavLink>
+          <NavLink href="#" className={classes.navLink}>
+            Rules
+          </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#" className={classes.navLink}>Leagues</NavLink>
+          <NavLink href="#" className={classes.navLink}>
+            Leagues
+          </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#" className={classes.navLink} disabled>Forum</NavLink>
+          <NavLink href="#" className={classes.navLink} disabled>
+            Forum
+          </NavLink>
         </NavItem>
         <NavItem>
           <NavLink disabled href="#">
             Discord
-        </NavLink>
+          </NavLink>
         </NavItem>
       </Nav>
+
+      {!isEmpty(userProvider.user) ? (
+        <div className={classes.user}>
+          <img src={userProvider.user.photoURL} />
+          {userProvider.user.displayName}
+        </div>
+      ) : null}
     </Navbar>
   );
-}
+};
+
+const TopNavBar = () => {
+  return (
+    <UserProvider>
+      <InnerTopNavBar />
+    </UserProvider>
+  );
+};
 
 export default TopNavBar;

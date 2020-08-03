@@ -1,8 +1,10 @@
+.main {
+	display: grid;
+}
 .header {
 	display: grid;
 	width: 100%;
 	grid-template: auto / 1fr 1fr;
-	padding-right: 16px;
 	img {
 		width: 500px;
 		height: 500px;
@@ -22,8 +24,11 @@
 }
 
 .leagues {
+	justify-self: center;
+	margin-bottom: 66px;
+	width: 600px;
 	display: grid;
-	width: 100%;
+	grid-gap: 16px;
 	grid-template: auto / 1fr 1fr 1fr;
 	justify-content: center;
 
@@ -33,7 +38,7 @@
 	}
 }
 
-.allRaces {
+.checkeredGrid {
 	display: grid;
 	width: 100%;
   grid-template: 1fr 1fr / 1fr 1fr;

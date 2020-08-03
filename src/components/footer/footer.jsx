@@ -12,7 +12,7 @@ const Footer = () => {
         <p>
           © SPOOLRACING - 2020
           created by Elan Fraiman <br/>
-           - contact elfraiman@gmail.com
+           - contact spoolracing@gmail.com
         </p>
       </div>
 
