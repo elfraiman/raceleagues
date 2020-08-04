@@ -1,0 +1,52 @@
+.main {
+  display: grid;
+  grid-template: auto / 1fr 1fr;
+  grid-column-gap: 86px;
+  padding: 36px;
+
+  .title {
+    margin-bottom: 86px;
+    h3 {
+      font-weight: 700;
+      font-size: 45px;
+
+      padding: 0;
+    }
+  }
+  .markdown {
+    grid-column: 1/2;
+    font-weight: 500;
+    color: black;
+  }
+
+  .information {
+    grid-column: 2/3;
+
+    img {
+      width: 100%;
+      border-radius: 0.25rem;
+    }
+
+    .infoCard {
+      margin-top: 16px;
+      min-height: 700px;
+      .cardBody {
+        p {
+          font-weight: 500;
+          color: black;
+          margin: 16px;
+          margin-left: 0;
+          b {
+            font-weight: 700;
+            padding-left: 16px;
+          }
+        }
+      }
+
+      .btn {
+        margin-top: 16px;
+        width: 100%;
+      }
+    }
+  }
+}

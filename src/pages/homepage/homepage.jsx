@@ -5,10 +5,7 @@ import { Spring } from "react-spring/renderprops";
 import VisibilitySensor from "react-visibility-sensor";
 import { Button } from "shards-react";
 import paulricard3gt3 from "../../assets/images/3hourspaulricard.jpg";
-import amgGtPic from "../../assets/images/amggt3.jpg";
 import formulaPic from "../../assets/images/formula-e.png";
-import gt4Cars from "../../assets/images/gt4cars.jpg";
-import mclarenGt3 from "../../assets/images/mclaren-acc.jpg";
 import spa3mixed from "../../assets/images/spa3hoursmixed.jpg";
 import spoolracingbmw from "../../assets/images/spoolracingbmw.png";
 import LeagueCard from "../../components/league-card/leagueCard";
@@ -88,7 +85,7 @@ const InnerHomePage = () => {
                 {(props) => (
                   <div className={classes.leagues} style={{ ...props }}>
                     {raceProvider.races.map((race, i) => (
-                      <div className={classes.leagueCard} key={i} onClick={() => history.push("/")}>
+                      <div className={classes.leagueCard} key={i} onClick={() => history.push(`/league/${race.name}`)}>
                         <LeagueCard
                           header={race.title.toUpperCase()}
                           date={moment(race.raceDate.toDate(), "en").format("LLLL, UTCZZ")}
