@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import firebase from "../../firebase.js";
+import firebase from "../firebase.js";
 
 export const UserContext = createContext(null);
 
@@ -14,8 +14,6 @@ const UserProvider = ({ children }) => {
       setUser(false);
     }
   });
-
-  console.log(user, "user in provider");
 
   return (
     <UserContext.Provider
