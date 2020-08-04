@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./leaguCard.module.scss";
-import { Card, CardHeader, CardImg, CardBody, CardFooter } from "shards-react";
+import { Card, CardHeader, CardImg, CardBody, CardFooter, Button } from "shards-react";
 import Divider from "@material-ui/core/Divider";
 
 const LeagueCard = ({ header, carClass, image, date, footer, type }) => {
@@ -23,6 +23,9 @@ const LeagueCard = ({ header, carClass, image, date, footer, type }) => {
             <h6>Class:</h6> <span>{carClass}</span>
           </div>
         </div>
+        <Divider />
+
+        <Button className={classes.btn}>Read more &rarr;</Button>
       </CardBody>
 
       <CardFooter style={{ fontWeight: "700" }}>

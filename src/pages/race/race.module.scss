@@ -1,5 +1,5 @@
 .racePage {
-  height: 100vh;
+  
   .main {
     display: grid;
     grid-template: 50px 1fr / 1fr 1fr 1fr;
@@ -49,4 +49,13 @@
       margin-top: 16px;
     }
   }
+}
+
+
+.raceImgCard {
+  margin-bottom: 16px;
+}
+.raceImg {
+  width: 100%;
+  border-radius: 4px;
 }
