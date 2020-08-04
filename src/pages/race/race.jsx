@@ -18,7 +18,6 @@ const RacePage = () => {
   const { race } = useParams();
 
   useEffect(() => {
-    console.log(race);
     database.collection('races').get()
       .then(response => {
         response.docs.forEach(document => {
@@ -37,8 +36,6 @@ const RacePage = () => {
       });
   }, [])
 
-  console.log(trackData, raceData);
-
   return (
     <div className={classes.racePage}>
       {raceData && trackData ?
@@ -56,10 +53,10 @@ const RacePage = () => {
             <h5><span>Track Length:</span> <br />{trackData.trackLength}</h5>
             <h5><span>Number of turns:</span> <br />{trackData.numberOfTurns}</h5>
             <h5><span>Real lap record:</span> <br />{trackData.lapRealRecord}</h5>
-            <h5><span>Max perticipants:</span> <br />{raceData.perticipants}</h5>
+            <h5><span>Max perticipants:</span> <br />{raceData.availability}</h5>
             <h5><span>Race length:</span> <br />{raceData.raceLengthMinutes / 60} Hours</h5>
             <h5><span>Race date:</span> <br /> {moment(raceData.raceDate.toDate(), "en").format("LLLL, UTCZZ")} <a href="https://time.is/UTC+2">Check UTC+2</a></h5>
-            <h5><span>Category:</span> <br />{raceData.category}</h5>
+            <h5><span>Category:</span> <br />{raceData.carClass.toUpperCase()}</h5>
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}

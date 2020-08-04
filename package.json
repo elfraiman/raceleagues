@@ -7,14 +7,18 @@
     "@material-ui/icons": "^4.9.1",
     "firebase": "^7.17.1",
     "lodash": "^4.17.19",
+    "markdown-to-jsx": "^6.11.4",
     "moment": "^2.27.0",
     "node-sass": "^4.14.1",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
+    "react-html-parser": "^2.0.2",
+    "react-markdown": "^4.3.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "2.1.1",
     "react-spring": "^8.0.27",
     "react-visibility-sensor": "^5.1.1",
+    "remarkable": "^2.0.1",
     "shards-react": "^1.0.3"
   },
   "scripts": {

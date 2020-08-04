@@ -1,14 +1,29 @@
 import { isEmpty } from "lodash";
-import React, { useContext } from "react";
-import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from "shards-react";
+import React, { useContext, useState } from "react";
+import {
+  Nav,
+  Navbar,
+  NavbarBrand,
+  NavItem,
+  NavLink,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "shards-react";
 
-import UserProvider, { UserContext } from "../../providers/Router/userProvider";
+import UserProvider, { UserContext } from "../../providers/userProvider";
 import classes from "./navbar.module.scss";
 
 const InnerTopNavBar = () => {
+  const [dropDownState, setDropdown] = useState(false);
   const userProvider = useContext(UserContext);
 
-  console.log(userProvider, "user provider");
+
+  const toggleDropDown = () => {
+    setDropdown(!dropDownState)
+  }
+
   return (
     <Navbar type="light" expand="md" sticky="top" className={classes.main}>
       <NavbarBrand href="#">
@@ -27,19 +42,23 @@ const InnerTopNavBar = () => {
         </NavItem>
         <NavItem>
           <NavLink href="#" className={classes.navLink}>
-            Leagues
+            Events
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href="#" className={classes.navLink} disabled>
-            Forum
+          <NavLink href="#" className={classes.navLink}>
+            Team
           </NavLink>
         </NavItem>
-        <NavItem>
-          <NavLink disabled href="#">
-            Discord
-          </NavLink>
-        </NavItem>
+        <Dropdown open={dropDownState} toggle={toggleDropDown}>
+          <DropdownToggle nav caret theme="success">
+            Tools
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem>Fuel Calculator</DropdownItem>
+            <DropdownItem>Discord</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
       </Nav>
 
       {!isEmpty(userProvider.user) ? (
