@@ -36,7 +36,7 @@ const InnerLeaguePage = () => {
 
           <div className={classes.information}>
             <Card>
-              <img src={leagueData.img} />
+              <img src={leagueData.img} alt="league"/>
             </Card>
 
             <Card className={classes.infoCard}>
