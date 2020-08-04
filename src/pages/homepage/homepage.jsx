@@ -27,7 +27,7 @@ const InnerHomePage = () => {
     if (raceOrLeague === "race") {
       history.push(`/race/${eventName}`);
     } else {
-      history.push(`/league/${eventName}`)
+      history.push(`/event/${eventName}`)
     }
   }
 
@@ -85,7 +85,7 @@ const InnerHomePage = () => {
                 {(props) => (
                   <div className={classes.leagues} style={{ ...props }}>
                     {raceProvider.races.map((race, i) => (
-                      <div className={classes.leagueCard} key={i} onClick={() => history.push(`/league/${race.name}`)}>
+                      <div className={classes.leagueCard} key={i} onClick={() => navigateToRaceOrLeague(race.type, race.name)}>
                         <LeagueCard
                           header={race.title.toUpperCase()}
                           date={moment(race.raceDate.toDate(), "en").format("LLLL, UTCZZ")}

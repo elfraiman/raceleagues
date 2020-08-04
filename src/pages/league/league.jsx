@@ -70,10 +70,10 @@ const InnerLeaguePage = () => {
                   Fixed setup: <b>{leagueData.fixedSetup ? "Yes" : "No"}</b>
                 </p>
                 <Divider />
-
-                <Button className={classes.btn}>Register</Button>
               </CardBody>
             </Card>
+            
+            <Button className={classes.btn}>Register</Button>
           </div>
         </div>
       ) : (
