@@ -1,0 +1,91 @@
+.racePage {
+  padding: 0 200px 0 200px;
+  .main {
+    display: grid;
+    grid-template: 120px 1fr / 1fr 1fr;
+    padding: 26px;
+    grid-column-gap: 26px;
+    justify-items: center;
+
+    .title {
+      grid-column: 1/4;
+      grid-row: 1/2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      h2 {
+        font-size: 55px;
+        font-weight: 700;
+        text-align: center;
+        color: black;
+        text-transform: uppercase;
+        margin: 0;
+      }
+      img {
+        width: 65px;
+        height: 50px;
+        margin-right: 16px;
+      }
+    }
+
+    .raceInfo {
+      grid-column: 1/2;
+      grid-row: 2/3;
+
+      img {
+        width: 100%;
+        min-width: 400px;
+        border-radius: 4px;
+      }
+
+      .infoCard {
+        margin-top: 16px;
+
+        .markdown {
+          color: black;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .trackData {
+      grid-column: 2/4;
+      grid-row: 2/3;
+
+      h6 {
+        margin: 0;
+      }
+
+      h5 {
+        font-weight: 600;
+
+        span {
+          color: grey;
+          font-size: 13px;
+        }
+      }
+    }
+
+    .registerButton {
+      grid-column: 2/4;
+      grid-row: 3/5;
+      margin-top: 16px;
+      width: 100%;
+    }
+  }
+}
+
+.trackImgCard {
+  margin-bottom: 16px;
+  padding: 16px;
+}
+.trackImg {
+  width: 100%;
+  min-width: 400px;
+  border-radius: 4px;
+}
+
+.driverName {
+  font-weight: 700;
+}
