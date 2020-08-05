@@ -87,5 +87,20 @@
 }
 
 .driverName {
+  font-weight: 500;
+  width: 100%;
+
+  .driverImg {
+    width: 30px;
+    margin-right: 6px;
+    border-radius: 4px;
+  }
+
+  .divider {
+    margin: 6px 0px 6px 0px;
+  }
+}
+
+h6 {
   font-weight: 700;
 }

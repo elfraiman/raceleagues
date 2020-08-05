@@ -5,14 +5,14 @@ import { useParams } from "react-router-dom";
 import { isEmpty } from "lodash";
 import { LinearProgress, Divider } from "@material-ui/core";
 import ReactHtmlParser from "react-html-parser";
-import { Card, CardBody, Button} from "shards-react";
+import { Card, CardBody, Button } from "shards-react";
 import moment from "moment";
 
 const InnerLeaguePage = () => {
   const raceProvider = useContext(RaceContext);
   const { league } = useParams();
   const leagueData = raceProvider.fetchRace(league);
-  
+
   return (
     <React.Fragment>
       {!isEmpty(leagueData) ? (
@@ -35,7 +35,7 @@ const InnerLeaguePage = () => {
 
           <div className={classes.information}>
             <Card>
-              <img src={leagueData.img} alt="league"/>
+              <img src={leagueData.img} alt="league" />
             </Card>
 
             <Card className={classes.infoCard}>
@@ -50,7 +50,11 @@ const InnerLeaguePage = () => {
                 </p>
                 <Divider />
                 <p>
-                  Availablity: <b>{leagueData.availability}/{leagueData.availability - leagueData.currentDriverCount} </b>
+                  Availablity:{" "}
+                  <b>
+                    {leagueData.availability}/
+                    {leagueData.availability - leagueData.drivers.length}{" "}
+                  </b>
                 </p>
                 <Divider />
                 <p>
@@ -71,7 +75,7 @@ const InnerLeaguePage = () => {
                 <Divider />
               </CardBody>
             </Card>
-            
+
             <Button className={classes.btn}>Register</Button>
           </div>
         </div>
