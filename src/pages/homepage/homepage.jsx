@@ -24,7 +24,7 @@ const InnerHomePage = () => {
 
 
   const navigateToRaceOrLeague = (raceOrLeague, eventName) => {
-    if (raceOrLeague === "race") {
+    if (raceOrLeague === "endurance") {
       history.push(`/race/${eventName}`);
     } else {
       history.push(`/event/${eventName}`)
@@ -173,7 +173,7 @@ const InnerHomePage = () => {
             <VisibilitySensor partialVisibility>
               {({ isVisible }) => (
                 <Spring
-                  delay={500}
+                  delay={300}
                   to={{
                     opacity: isVisible ? 1 : 0,
                     transform: isVisible
@@ -197,7 +197,7 @@ const InnerHomePage = () => {
             <VisibilitySensor partialVisibility>
               {({ isVisible }) => (
                 <Spring
-                  delay={400}
+                  delay={300}
                   to={{
                     opacity: isVisible ? 1 : 0,
                     transform: isVisible
@@ -221,7 +221,7 @@ const InnerHomePage = () => {
             <VisibilitySensor partialVisibility>
               {({ isVisible }) => (
                 <Spring
-                  delay={400}
+                  delay={300}
                   to={{
                     opacity: isVisible ? 1 : 0,
                     transform: isVisible

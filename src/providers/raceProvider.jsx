@@ -11,7 +11,7 @@ const RaceProvider = ({ children }) => {
 
   useEffect(() => {
     database
-      .collection("races")
+      .collection("championships")
       .get()
       .then((response) => {
         const raceArray = [];

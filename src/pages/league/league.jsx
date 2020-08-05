@@ -12,8 +12,7 @@ const InnerLeaguePage = () => {
   const raceProvider = useContext(RaceContext);
   const { league } = useParams();
   const leagueData = raceProvider.fetchRace(league);
-
-  console.log(leagueData);
+  
   return (
     <React.Fragment>
       {!isEmpty(leagueData) ? (

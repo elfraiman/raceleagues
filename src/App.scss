@@ -1,4 +1,11 @@
 main {
-  font-family: 'Red Rose', 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica',
-    'Arial', sans-serif;
+  font-family: "Red Rose", "SF Pro Text", "SF Pro Icons", "Helvetica Neue",
+    "Helvetica", "Arial", sans-serif;
+}
+
+.alert {
+  background-color: black;
+  font-family: "Red Rose";
+  font-weight: 500;
+  color: white;
 }
