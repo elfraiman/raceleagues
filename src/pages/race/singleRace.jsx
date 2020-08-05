@@ -157,17 +157,19 @@ const InnerRacePage = () => {
                     <h6 className={classes.heading}>Registered Racers</h6>
                   </AccordionSummary>
                   <AccordionDetails>
-                    {raceData.drivers.map((driver) => (
-                      <div key={driver.name} className={classes.driverName}>
-                        <img
-                          src={driver.img}
-                          alt="driver"
-                          className={classes.driverImg}
-                        />
-                        {driver.name}
-                        <Divider className={classes.divider} />
-                      </div>
-                    ))}
+                    <div className={classes.driversWrapper}>
+                      {raceData.drivers.map((driver) => (
+                        <div key={driver.name} className={classes.driverName}>
+                          <img
+                            src={driver.img}
+                            alt="driver"
+                            className={classes.driverImg}
+                          />
+                          {driver.name}
+                          <Divider className={classes.divider} />
+                        </div>
+                      ))}
+                    </div>
                   </AccordionDetails>
                 </Accordion>
 
