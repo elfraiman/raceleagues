@@ -14,7 +14,7 @@ import RaceProvider, { RaceContext } from "../../providers/raceProvider";
 import classes from "./homepage.module.scss";
 import { isEmpty } from "lodash";
 import { LinearProgress } from "@material-ui/core";
-import moment from 'moment';
+import moment from "moment";
 
 const InnerHomePage = () => {
   const fadeIn = useSpring({ opacity: 1, from: { opacity: 0 } });
@@ -22,14 +22,13 @@ const InnerHomePage = () => {
   const authProvider = new firebase.auth.FacebookAuthProvider();
   const raceProvider = useContext(RaceContext);
 
-
   const navigateToRaceOrLeague = (raceOrLeague, eventName) => {
     if (raceOrLeague === "endurance") {
       history.push(`/race/${eventName}`);
     } else {
-      history.push(`/event/${eventName}`)
+      history.push(`/event/${eventName}`);
     }
-  }
+  };
 
   const joinWithFB = () => {
     firebase
@@ -85,12 +84,20 @@ const InnerHomePage = () => {
                 {(props) => (
                   <div className={classes.leagues} style={{ ...props }}>
                     {raceProvider.races.map((race, i) => (
-                      <div className={classes.leagueCard} key={i} onClick={() => navigateToRaceOrLeague(race.type, race.name)}>
+                      <div
+                        className={classes.leagueCard}
+                        key={i}
+                        onClick={() =>
+                          navigateToRaceOrLeague(race.type, race.name)
+                        }
+                      >
                         <LeagueCard
                           header={race.title.toUpperCase()}
-                          date={moment(race.raceDate.toDate(), "en").format("LLLL, UTCZZ")}
+                          date={moment(race.raceDate.toDate(), "en").format(
+                            "LLLL, UTCZZ"
+                          )}
                           type={race.type.toUpperCase()}
-                          class={race.carClass}
+                          carClass={race.carClass.toUpperCase()}
                           image={race.img}
                           button="More info"
                           footer={race.level.toUpperCase()}
@@ -185,7 +192,9 @@ const InnerHomePage = () => {
                     <div
                       style={{ ...props }}
                       className={classes.racesTopRight}
-                      onClick={() => navigateToRaceOrLeague("race", "3hoursofpaulricard")}
+                      onClick={() =>
+                        navigateToRaceOrLeague("race", "3hoursofpaulricard")
+                      }
                     >
                       <img src={paulricard3gt3} alt="paulricard3hours" />
                     </div>
@@ -209,7 +218,9 @@ const InnerHomePage = () => {
                     <div
                       style={{ ...props }}
                       className={classes.racesBottomLeft}
-                      onClick={() => navigateToRaceOrLeague("race", "3hoursofspa")}
+                      onClick={() =>
+                        navigateToRaceOrLeague("race", "3hoursofspa")
+                      }
                     >
                       <img src={spa3mixed} alt="3hoursofspa" />
                     </div>

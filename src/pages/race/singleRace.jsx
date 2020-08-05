@@ -15,6 +15,7 @@ import RaceProvider, { RaceContext } from "../../providers/raceProvider";
 import UserProvider, { UserContext } from "../../providers/userProvider";
 import classes from "./singleRace.module.scss";
 import { useAlert } from "react-alert";
+import { Divider } from "@material-ui/core";
 
 const database = firebase.firestore();
 
@@ -27,7 +28,6 @@ const InnerRacePage = () => {
   const raceData = raceProvider.fetchRace(race);
 
   useEffect(() => {
-    console.log(raceData, "racedata");
     if (!isEmpty(raceData)) {
       database
         .collection("tracks")
@@ -42,7 +42,7 @@ const InnerRacePage = () => {
 
   const joinRace = async () => {
     const user = userProvider.user;
-
+    console.log(user);
     const championshipRef = database
       .collection("championships")
       .doc(raceData.name);
@@ -50,10 +50,8 @@ const InnerRacePage = () => {
     const championshipData = (await championshipRef.get()).data();
 
     const driverAlreadyRegistered = championshipData.drivers.filter(
-      (driver) => driver.name === user.displayName
+      (driver) => driver.uid === user.uid
     );
-
-    console.log(driverAlreadyRegistered, "already?");
 
     const noAvailableSlots =
       championshipData.drivers.length === championshipData.availability;
@@ -70,7 +68,15 @@ const InnerRacePage = () => {
 
     championshipRef
       .update({
-        drivers: [...championshipData.drivers, { name: user.displayName }],
+        drivers: [
+          ...championshipData.drivers,
+          {
+            name: user.displayName,
+            uid: user.uid,
+            email: user.email,
+            img: user.photoURL,
+          },
+        ],
       })
       .then(function() {
         console.log("Document successfully updated!");
@@ -152,7 +158,15 @@ const InnerRacePage = () => {
                   </AccordionSummary>
                   <AccordionDetails>
                     {raceData.drivers.map((driver) => (
-                      <p className={classes.driverName}>{driver.name}</p>
+                      <div key={driver.name} className={classes.driverName}>
+                        <img
+                          src={driver.img}
+                          alt="driver"
+                          className={classes.driverImg}
+                        />
+                        {driver.name}
+                        <Divider className={classes.divider} />
+                      </div>
                     ))}
                   </AccordionDetails>
                 </Accordion>
