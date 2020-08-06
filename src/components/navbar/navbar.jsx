@@ -11,12 +11,15 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "shards-react";
-
 import UserProvider, { UserContext } from "../../providers/userProvider";
 import classes from "./navbar.module.scss";
+import FuelCalculator from "../fuel-calculator/fuelCalculator";
 
 const InnerTopNavBar = () => {
   const [dropDownState, setDropdown] = useState(false);
+  const [fuelCalculatorModalState, setFuelCalculatorModalState] = useState(
+    false
+  );
   const [profileDropDownState, setProfileDropDown] = useState(false);
   const userProvider = useContext(UserContext);
 
@@ -26,15 +29,21 @@ const InnerTopNavBar = () => {
 
   const toggleProfileDropDown = () => {
     setProfileDropDown(!profileDropDownState);
-  }
+  };
 
   const logout = () => {
     userProvider.logout();
-  }
+  };
 
   const loginWithFb = () => {
     userProvider.loginWithFb();
-  }
+  };
+
+  const triggerFuelCalculatorModal = () => {
+    console.log("set", fuelCalculatorModalState);
+    setFuelCalculatorModalState(!fuelCalculatorModalState);
+  };
+
   return (
     <Navbar type="light" expand="md" sticky="top" className={classes.main}>
       <NavbarBrand href="#">
@@ -48,17 +57,13 @@ const InnerTopNavBar = () => {
         </NavItem>
         <NavItem>
           <NavLink href="#" className={classes.navLink}>
-            Rules
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="#" className={classes.navLink}>
-            Events
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="#" className={classes.navLink}>
             Team
+          </NavLink>
+        </NavItem>
+        <NavItem></NavItem>
+        <NavItem>
+          <NavLink href="#" className={classes.navLink}>
+            Rules
           </NavLink>
         </NavItem>
         <Dropdown open={dropDownState} toggle={toggleDropDown}>
@@ -66,29 +71,34 @@ const InnerTopNavBar = () => {
             Tools
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem>Fuel Calculator</DropdownItem>
+            <DropdownItem onClick={triggerFuelCalculatorModal}>
+              Fuel Calculator
+            </DropdownItem>
             <DropdownItem>Discord</DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </Nav>
 
+     
+      <FuelCalculator fuelCalculatorModalState={fuelCalculatorModalState} triggerFuelCalculatorModal={triggerFuelCalculatorModal} />
+
       {!isEmpty(userProvider.user) ? (
-           <Dropdown open={profileDropDownState} toggle={toggleProfileDropDown}>
-        <DropdownToggle nav>
+        <Dropdown open={profileDropDownState} toggle={toggleProfileDropDown}>
+          <DropdownToggle nav>
             <div className={classes.user}>
-              <img src={userProvider.user.photoURL} alt="your profile" />
-              {userProvider.user.displayName}
+              <img src={userProvider.user.img} alt="your profile" />
+              {userProvider.user.name}
             </div>
-        </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem onClick={logout}>Logout</DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem onClick={logout}>Logout</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
       ) : (
-      <div className={classes.user} onClick={loginWithFb}>
-        Log in
-      </div> )}
-   
+        <div className={classes.user} onClick={loginWithFb}>
+          Log in
+        </div>
+      )}
     </Navbar>
   );
 };
