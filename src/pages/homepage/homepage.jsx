@@ -1,4 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import { LinearProgress } from "@material-ui/core";
+import { isEmpty } from "lodash";
+import moment from "moment";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { animated, useSpring } from "react-spring";
 import { Spring } from "react-spring/renderprops";
@@ -10,11 +13,8 @@ import spa3mixed from "../../assets/images/spa3hoursmixed.jpg";
 import spoolracingbmw from "../../assets/images/spoolracingbmw.png";
 import LeagueCard from "../../components/league-card/leagueCard";
 import RaceProvider, { RaceContext } from "../../providers/raceProvider";
-import classes from "./homepage.module.scss";
-import { isEmpty } from "lodash";
-import { LinearProgress } from "@material-ui/core";
-import moment from "moment";
 import UserProvider, { UserContext } from "../../providers/userProvider";
+import classes from "./homepage.module.scss";
 
 
 
@@ -36,10 +36,6 @@ const InnerHomePage = () => {
   const joinWithFB = () => {
     userProvider.loginWithFb();
   };
-
-  useEffect(() => {
-    console.log(raceProvider, "race provider");
-  }, [raceProvider]);
 
   return (
     <div className={classes.main}>

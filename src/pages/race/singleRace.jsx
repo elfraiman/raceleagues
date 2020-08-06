@@ -33,15 +33,13 @@ const InnerRacePage = () => {
         .doc(raceData.track)
         .get()
         .then((response) => {
-          console.log(raceData.track, "track", response.data(), "response");
           setTrack(response.data());
         });
     }
   }, [raceProvider]);
 
   const joinRace = async () => {
-    const user = userProvider.user;
-    console.log(user);
+    const user = await userProvider.user;
     const championshipRef = database
       .collection("championships")
       .doc(raceData.name);
@@ -69,16 +67,10 @@ const InnerRacePage = () => {
       .update({
         drivers: [
           ...championshipData.drivers,
-          {
-            name: user.displayName,
-            uid: user.uid,
-            email: user.email,
-            img: user.photoURL,
-          },
+         user
         ],
       })
       .then(function() {
-        console.log("Document successfully updated!");
         alert.success("You have successfuly signed up!");
       })
       .catch(function(error) {

@@ -25,7 +25,7 @@ const InnerLeaguePage = () => {
   const alert = useAlert();
 
   const joinRace = async () => {
-    const user = userProvider.user;
+    const user = await userProvider.user;
 
     const championshipRef = database
       .collection("championships")
@@ -54,16 +54,10 @@ const InnerLeaguePage = () => {
       .update({
         drivers: [
           ...championshipData.drivers,
-          {
-            name: user.displayName,
-            uid: user.uid,
-            email: user.email,
-            img: user.photoURL,
-          },
+          user
         ],
       })
       .then(function() {
-        console.log("Document successfully updated!");
         alert.success("You have successfuly signed up!");
       })
       .catch(function(error) {

@@ -19,7 +19,8 @@ const UserProvider = ({ children }) => {
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      setUser(user);
+      const userDoc = database.collection("users").doc(user.email);
+      userDoc.get().then((user) => setUser(user.data()));
     } else {
       // No user is signed in.
       setUser(false);
@@ -97,12 +98,14 @@ const UserProvider = ({ children }) => {
   };
 
   const emptyFunc = () => {};
+
   return (
     <UserContext.Provider
       value={{
         user: user,
         logout: logout,
         loginWithFb: loginWithFb,
+        discordModal: triggerDiscordModel,
       }}
     >
       <div>
@@ -112,9 +115,14 @@ const UserProvider = ({ children }) => {
               Welcome {user ? user.displayName : null}
             </React.Fragment>
           </ModalHeader>
-          <ModalBody>
+          <ModalBody className={classes.modal}>
             <p>Thank you for joining SpoolRacing!</p>
-            <p>To be able to join races we need your discord id!</p>
+            <p>
+              To be able to join races we need your discord id, we also use
+              discord as a place to announce updates and chat with fellow
+              friendcers! that was friends.. and racers.. yes, we made up a new
+              word.
+            </p>
             <FormInput
               placeholder="Discord ID"
               onChange={(e) => handleDiscordInputChange(e)}
