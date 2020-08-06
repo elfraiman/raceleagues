@@ -9,7 +9,6 @@ import React, { useContext, useEffect, useState } from "react";
 import ReactHtmlParser from "react-html-parser";
 import { useParams } from "react-router-dom";
 import { Button, Card, CardBody } from "shards-react";
-
 import firebase from "../../firebase.js";
 import RaceProvider, { RaceContext } from "../../providers/raceProvider";
 import UserProvider, { UserContext } from "../../providers/userProvider";
@@ -152,50 +151,56 @@ const InnerRacePage = () => {
                   <span>Category:</span> <br />
                   {raceData.carClass.toUpperCase()}
                 </h5>
-                <Accordion>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <h6 className={classes.heading}>Registered Racers</h6>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <div className={classes.driversWrapper}>
-                      {raceData.drivers.map((driver) => (
-                        <div key={driver.name} className={classes.driverName}>
-                          <img
-                            src={driver.img}
-                            alt="driver"
-                            className={classes.driverImg}
-                          />
-                          {driver.name}
-                          <Divider className={classes.divider} />
-                        </div>
-                      ))}
-                    </div>
-                  </AccordionDetails>
-                </Accordion>
-
-                <Accordion>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <h6 className={classes.heading}>Onboard Lap</h6>
-                  </AccordionSummary>
-
-                  <AccordionDetails>
-                    <iframe
-                      width="100%"
-                      title="onboard"
-                      height="315"
-                      src={raceData.onboard}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </AccordionDetails>
-                </Accordion>
-
-                <Button className={classes.registerButton} onClick={joinRace}>
-                  Join Race
-                </Button>
               </CardBody>
             </Card>
+
+            <Card className={classes.accordionCard}>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <h6 className={classes.heading}>
+                    Registered Racers ({raceData.drivers.length})
+                  </h6>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div className={classes.driversWrapper}>
+                    {raceData.drivers.map((driver) => (
+                      <div key={driver.name} className={classes.driverName}>
+                        <img
+                          src={driver.img}
+                          alt="driver"
+                          className={classes.driverImg}
+                        />
+                        {driver.name}
+                        <Divider className={classes.divider} />
+                      </div>
+                    ))}
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+            </Card>
+            <Card className={classes.accordionCard}>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <h6 className={classes.heading}>Onboard Lap</h6>
+                </AccordionSummary>
+
+                <AccordionDetails>
+                  <iframe
+                    width="100%"
+                    title="onboard"
+                    height="315"
+                    src={raceData.onboard}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </AccordionDetails>
+              </Accordion>
+            </Card>
+
+            <Button className={classes.registerButton} onClick={joinRace}>
+              Join Race
+            </Button>
           </div>
         </div>
       ) : (

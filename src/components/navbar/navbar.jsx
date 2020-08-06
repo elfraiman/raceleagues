@@ -17,13 +17,24 @@ import classes from "./navbar.module.scss";
 
 const InnerTopNavBar = () => {
   const [dropDownState, setDropdown] = useState(false);
+  const [profileDropDownState, setProfileDropDown] = useState(false);
   const userProvider = useContext(UserContext);
 
-
   const toggleDropDown = () => {
-    setDropdown(!dropDownState)
+    setDropdown(!dropDownState);
+  };
+
+  const toggleProfileDropDown = () => {
+    setProfileDropDown(!profileDropDownState);
   }
 
+  const logout = () => {
+    userProvider.logout();
+  }
+
+  const loginWithFb = () => {
+    userProvider.loginWithFb();
+  }
   return (
     <Navbar type="light" expand="md" sticky="top" className={classes.main}>
       <NavbarBrand href="#">
@@ -62,13 +73,22 @@ const InnerTopNavBar = () => {
       </Nav>
 
       {!isEmpty(userProvider.user) ? (
-        <div className={classes.user}>
-          <img src={userProvider.user.photoURL} alt="your profile" />
-          {userProvider.user.displayName}
-        </div>
+           <Dropdown open={profileDropDownState} toggle={toggleProfileDropDown}>
+        <DropdownToggle nav>
+            <div className={classes.user}>
+              <img src={userProvider.user.photoURL} alt="your profile" />
+              {userProvider.user.displayName}
+            </div>
+        </DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem onClick={logout}>Logout</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
       ) : (
-        <div className={classes.user}>Log in</div>
-      )}
+      <div className={classes.user} onClick={loginWithFb}>
+        Log in
+      </div> )}
+   
     </Navbar>
   );
 };

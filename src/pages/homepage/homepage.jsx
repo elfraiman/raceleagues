@@ -9,18 +9,21 @@ import formulaPic from "../../assets/images/formula-e.png";
 import spa3mixed from "../../assets/images/spa3hoursmixed.jpg";
 import spoolracingbmw from "../../assets/images/spoolracingbmw.png";
 import LeagueCard from "../../components/league-card/leagueCard";
-import firebase from "../../firebase.js";
 import RaceProvider, { RaceContext } from "../../providers/raceProvider";
 import classes from "./homepage.module.scss";
 import { isEmpty } from "lodash";
 import { LinearProgress } from "@material-ui/core";
 import moment from "moment";
+import UserProvider, { UserContext } from "../../providers/userProvider";
+
+
 
 const InnerHomePage = () => {
   const fadeIn = useSpring({ opacity: 1, from: { opacity: 0 } });
   const history = useHistory();
-  const authProvider = new firebase.auth.FacebookAuthProvider();
   const raceProvider = useContext(RaceContext);
+  const userProvider = useContext(UserContext);
+
 
   const navigateToRaceOrLeague = (raceOrLeague, eventName) => {
     if (raceOrLeague === "endurance") {
@@ -31,20 +34,7 @@ const InnerHomePage = () => {
   };
 
   const joinWithFB = () => {
-    firebase
-      .auth()
-      .signInWithPopup(authProvider)
-      .then(function(result) {
-        console.log(result, "result");
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        // var token = result.credential.accessToken;
-        // The signed-in user info.
-        // var user = result.user;
-        // ...
-      })
-      .catch(function(error) {
-        console.error(error);
-      });
+    userProvider.loginWithFb();
   };
 
   useEffect(() => {
@@ -189,11 +179,34 @@ const InnerHomePage = () => {
                   }}
                 >
                   {(props) => (
+                    <div style={{ ...props }} className={classes.racesTopRight}>
+                      <img src={spoolracingbmw} alt="spoolracing bmw" />
+                    </div>
+                  )}
+                </Spring>
+              )}
+            </VisibilitySensor>
+
+            <VisibilitySensor partialVisibility>
+              {({ isVisible }) => (
+                <Spring
+                  delay={300}
+                  to={{
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible
+                      ? "translateY(0px)"
+                      : "translateY(200px)",
+                  }}
+                >
+                  {(props) => (
                     <div
                       style={{ ...props }}
-                      className={classes.racesTopRight}
+                      className={classes.racesBottomLeft}
                       onClick={() =>
-                        navigateToRaceOrLeague("race", "3hoursofpaulricard")
+                        navigateToRaceOrLeague(
+                          "endurance",
+                          "3hoursofpaulricard"
+                        )
                       }
                     >
                       <img src={paulricard3gt3} alt="paulricard3hours" />
@@ -217,35 +230,12 @@ const InnerHomePage = () => {
                   {(props) => (
                     <div
                       style={{ ...props }}
-                      className={classes.racesBottomLeft}
+                      className={classes.racesBottomRight}
                       onClick={() =>
-                        navigateToRaceOrLeague("race", "3hoursofspa")
+                        navigateToRaceOrLeague("endurance", "3hoursofspa")
                       }
                     >
                       <img src={spa3mixed} alt="3hoursofspa" />
-                    </div>
-                  )}
-                </Spring>
-              )}
-            </VisibilitySensor>
-
-            <VisibilitySensor partialVisibility>
-              {({ isVisible }) => (
-                <Spring
-                  delay={300}
-                  to={{
-                    opacity: isVisible ? 1 : 0,
-                    transform: isVisible
-                      ? "translateY(0px)"
-                      : "translateY(200px)",
-                  }}
-                >
-                  {(props) => (
-                    <div
-                      style={{ ...props }}
-                      className={classes.racesBottomRight}
-                    >
-                      <img src={spoolracingbmw} alt="spoolracing bmw" />
                     </div>
                   )}
                 </Spring>
@@ -263,7 +253,9 @@ const InnerHomePage = () => {
 const HomePage = () => {
   return (
     <RaceProvider>
+      <UserProvider>
       <InnerHomePage />
+      </UserProvider>
     </RaceProvider>
   );
 };

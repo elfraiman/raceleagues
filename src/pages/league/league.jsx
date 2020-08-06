@@ -7,11 +7,69 @@ import { LinearProgress, Divider } from "@material-ui/core";
 import ReactHtmlParser from "react-html-parser";
 import { Card, CardBody, Button } from "shards-react";
 import moment from "moment";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import UserProvider, { UserContext } from "../../providers/userProvider";
+import firebase from "../../firebase.js";
+import { useAlert } from "react-alert";
+
+const database = firebase.firestore();
 
 const InnerLeaguePage = () => {
+  const userProvider = useContext(UserContext);
   const raceProvider = useContext(RaceContext);
   const { league } = useParams();
   const leagueData = raceProvider.fetchRace(league);
+  const alert = useAlert();
+
+  const joinRace = async () => {
+    const user = userProvider.user;
+
+    const championshipRef = database
+      .collection("championships")
+      .doc(leagueData.name);
+
+    const championshipData = (await championshipRef.get()).data();
+
+    const driverAlreadyRegistered = championshipData.drivers.filter(
+      (driver) => driver.uid === user.uid
+    );
+
+    const noAvailableSlots =
+      championshipData.drivers.length === championshipData.availability;
+
+    if (!isEmpty(driverAlreadyRegistered)) {
+      alert.success("You are already registered for this event!");
+      return;
+    }
+
+    if (noAvailableSlots) {
+      alert.error("No available slots!");
+      return;
+    }
+
+    championshipRef
+      .update({
+        drivers: [
+          ...championshipData.drivers,
+          {
+            name: user.displayName,
+            uid: user.uid,
+            email: user.email,
+            img: user.photoURL,
+          },
+        ],
+      })
+      .then(function() {
+        console.log("Document successfully updated!");
+        alert.success("You have successfuly signed up!");
+      })
+      .catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+  };
 
   return (
     <React.Fragment>
@@ -52,8 +110,8 @@ const InnerLeaguePage = () => {
                 <p>
                   Availablity:{" "}
                   <b>
-                    {leagueData.availability}/
-                    {leagueData.availability - leagueData.drivers.length}{" "}
+                    {leagueData.availability - leagueData.drivers.length}/
+                    {leagueData.availability}
                   </b>
                 </p>
                 <Divider />
@@ -76,7 +134,33 @@ const InnerLeaguePage = () => {
               </CardBody>
             </Card>
 
-            <Button className={classes.btn}>Register</Button>
+            <Card className={classes.driversAccordion}>
+              <Accordion className={classes.accordion}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <h6 className={classes.heading}>
+                    Registered Racers ({leagueData.drivers.length})
+                  </h6>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div className={classes.driversWrapper}>
+                    {leagueData.drivers.map((driver) => (
+                      <div key={driver.name} className={classes.driverName}>
+                        <img
+                          src={driver.img}
+                          alt="driver"
+                          className={classes.driverImg}
+                        />
+                        {driver.name}
+                        <Divider className={classes.divider} />
+                      </div>
+                    ))}
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+            </Card>
+            <Button className={classes.btn} onClick={joinRace}>
+              Register
+            </Button>
           </div>
         </div>
       ) : (
@@ -89,7 +173,9 @@ const InnerLeaguePage = () => {
 const LeaguePage = () => {
   return (
     <RaceProvider>
-      <InnerLeaguePage />
+      <UserProvider>
+        <InnerLeaguePage />
+      </UserProvider>
     </RaceProvider>
   );
 };
