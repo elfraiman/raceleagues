@@ -9,7 +9,6 @@ import React, { useContext, useEffect, useState } from "react";
 import ReactHtmlParser from "react-html-parser";
 import { useParams } from "react-router-dom";
 import { Button, Card, CardBody } from "shards-react";
-
 import firebase from "../../firebase.js";
 import RaceProvider, { RaceContext } from "../../providers/raceProvider";
 import UserProvider, { UserContext } from "../../providers/userProvider";
@@ -34,15 +33,13 @@ const InnerRacePage = () => {
         .doc(raceData.track)
         .get()
         .then((response) => {
-          console.log(raceData.track, "track", response.data(), "response");
           setTrack(response.data());
         });
     }
   }, [raceProvider]);
 
   const joinRace = async () => {
-    const user = userProvider.user;
-    console.log(user);
+    const user = await userProvider.user;
     const championshipRef = database
       .collection("championships")
       .doc(raceData.name);
@@ -70,16 +67,10 @@ const InnerRacePage = () => {
       .update({
         drivers: [
           ...championshipData.drivers,
-          {
-            name: user.displayName,
-            uid: user.uid,
-            email: user.email,
-            img: user.photoURL,
-          },
+         user
         ],
       })
       .then(function() {
-        console.log("Document successfully updated!");
         alert.success("You have successfuly signed up!");
       })
       .catch(function(error) {
@@ -152,11 +143,18 @@ const InnerRacePage = () => {
                   <span>Category:</span> <br />
                   {raceData.carClass.toUpperCase()}
                 </h5>
-                <Accordion>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <h6 className={classes.heading}>Registered Racers</h6>
-                  </AccordionSummary>
-                  <AccordionDetails>
+              </CardBody>
+            </Card>
+
+            <Card className={classes.accordionCard}>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <h6 className={classes.heading}>
+                    Registered Racers ({raceData.drivers.length})
+                  </h6>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <div className={classes.driversWrapper}>
                     {raceData.drivers.map((driver) => (
                       <div key={driver.name} className={classes.driverName}>
                         <img
@@ -168,32 +166,33 @@ const InnerRacePage = () => {
                         <Divider className={classes.divider} />
                       </div>
                     ))}
-                  </AccordionDetails>
-                </Accordion>
-
-                <Accordion>
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <h6 className={classes.heading}>Onboard Lap</h6>
-                  </AccordionSummary>
-
-                  <AccordionDetails>
-                    <iframe
-                      width="100%"
-                      title="onboard"
-                      height="315"
-                      src={raceData.onboard}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    ></iframe>
-                  </AccordionDetails>
-                </Accordion>
-
-                <Button className={classes.registerButton} onClick={joinRace}>
-                  Join Race
-                </Button>
-              </CardBody>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
             </Card>
+            <Card className={classes.accordionCard}>
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <h6 className={classes.heading}>Onboard Lap</h6>
+                </AccordionSummary>
+
+                <AccordionDetails>
+                  <iframe
+                    width="100%"
+                    title="onboard"
+                    height="315"
+                    src={raceData.onboard}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </AccordionDetails>
+              </Accordion>
+            </Card>
+
+            <Button className={classes.registerButton} onClick={joinRace}>
+              Join Race
+            </Button>
           </div>
         </div>
       ) : (

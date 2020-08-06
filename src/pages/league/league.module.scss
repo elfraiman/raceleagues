@@ -42,12 +42,39 @@
           }
         }
       }
-
-   
     }
   }
   .btn {
     margin-top: 16px;
     width: 100%;
+  }
+}
+
+.driversAccordion {
+  margin-top: 16px;
+  h6 {
+    font-weight: 400;
+    margin: 0;
+  }
+  .accordion {
+    border-radius: 8px !important;
+  }
+  .driversWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    .driverName {
+      font-weight: 500;
+      width: 100%;
+      .driverImg {
+        width: 30px;
+        margin-right: 6px;
+        border-radius: 4px;
+      }
+
+      .divider {
+        margin: 6px 0px 6px 0px;
+      }
+    }
   }
 }
