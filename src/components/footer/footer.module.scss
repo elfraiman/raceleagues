@@ -41,7 +41,7 @@
   }
 }
 
-@media (min-device-width: 375px) and (max-device-width: 1300px) {
+@media (min-device-width: 200px) and (max-device-width: 1300px) {
   .footer {
     grid-template: auto / 1fr;
     padding: 16px;
