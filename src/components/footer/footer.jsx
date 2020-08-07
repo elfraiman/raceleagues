@@ -1,5 +1,5 @@
-import React from 'react';
-import classes from './footer.module.scss';
+import React from "react";
+import classes from "./footer.module.scss";
 
 const Footer = () => {
   return (
@@ -10,9 +10,8 @@ const Footer = () => {
 
       <div className={classes.center}>
         <p>
-          © SPOOLRACING - 2020
-          created by Elan Fraiman <br/>
-           - contact spoolracing@gmail.com
+          © SPOOLRACING - 2020 created by Elan Fraiman <br />- contact
+          spoolracing@gmail.com
         </p>
       </div>
 
@@ -20,7 +19,7 @@ const Footer = () => {
         <h3>Meet, Chat, Race.</h3>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Footer;

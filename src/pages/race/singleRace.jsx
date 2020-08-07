@@ -3,7 +3,7 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { isEmpty } from "lodash";
+import { isEmpty, isString } from "lodash";
 import moment from "moment";
 import React, { useContext, useEffect, useState } from "react";
 import ReactHtmlParser from "react-html-parser";
@@ -134,9 +134,11 @@ const InnerRacePage = () => {
                 </h5>
                 <h5>
                   <span>Race date:</span> <br />{" "}
-                  {moment(raceData.raceDate.toDate(), "en").format(
-                    "LLLL, UTCZZ"
-                  )}{" "}
+                  {isString(raceData.raceDate)
+                    ? raceData.raceDate
+                    : moment(raceData.raceDate.toDate(), "en").format(
+                        "LLLL, UTCZZ"
+                      )}{" "}
                   <a href="https://time.is/UTC+2">Check UTC+2</a>
                 </h5>
                 <h5>

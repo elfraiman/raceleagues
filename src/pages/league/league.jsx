@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import RaceProvider, { RaceContext } from "../../providers/raceProvider";
 import classes from "./league.module.scss";
 import { useParams } from "react-router-dom";
-import { isEmpty } from "lodash";
+import { isEmpty, isString } from "lodash";
 import { LinearProgress, Divider } from "@material-ui/core";
 import ReactHtmlParser from "react-html-parser";
 import { Card, CardBody, Button } from "shards-react";
@@ -33,12 +33,10 @@ const InnerLeaguePage = () => {
 
     const championshipData = (await championshipRef.get()).data();
 
-    const driverAlreadyRegistered = championshipData.drivers.filter(
-      (driver) => driver.uid === user.uid
-    );
+    const driverAlreadyRegistered = !isEmpty(championshipData.drivers) ?  championshipData.drivers.filter((driver) => driver.uid === user.uid
+    ) : false;
 
-    const noAvailableSlots =
-      championshipData.drivers.length === championshipData.availability;
+    const noAvailableSlots =championshipData.drivers.length === championshipData.availability;
 
     if (!isEmpty(driverAlreadyRegistered)) {
       alert.success("You are already registered for this event!");
@@ -52,10 +50,7 @@ const InnerLeaguePage = () => {
 
     championshipRef
       .update({
-        drivers: [
-          ...championshipData.drivers,
-          user
-        ],
+        drivers: [...championshipData.drivers, user],
       })
       .then(function() {
         alert.success("You have successfuly signed up!");
@@ -74,9 +69,11 @@ const InnerLeaguePage = () => {
               <h3>{leagueData.title.toUpperCase()}</h3>
               <h6>
                 {" "}
-                {moment(leagueData.raceDate.toDate(), "en").format(
-                  "LLLL, UTCZZ"
-                )}
+                {isString(leagueData.raceDate)
+                  ? leagueData.raceDate
+                  : moment(leagueData.raceDate.toDate(), "en").format(
+                      "LLLL, UTCZZ"
+                    )}
               </h6>
             </div>
 
@@ -95,9 +92,11 @@ const InnerLeaguePage = () => {
                 <p>
                   Start date:{" "}
                   <b>
-                    {moment(leagueData.raceDate.toDate(), "en").format(
-                      "LLLL, UTCZZ"
-                    )}
+                    {isString(leagueData.raceDate)
+                      ? leagueData.raceDate
+                      : moment(leagueData.raceDate.toDate(), "en").format(
+                          "LLLL, UTCZZ"
+                        )}
                   </b>
                 </p>
                 <Divider />
@@ -137,17 +136,19 @@ const InnerLeaguePage = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                   <div className={classes.driversWrapper}>
-                    {leagueData.drivers.map((driver) => (
-                      <div key={driver.name} className={classes.driverName}>
-                        <img
-                          src={driver.img}
-                          alt="driver"
-                          className={classes.driverImg}
-                        />
-                        {driver.name}
-                        <Divider className={classes.divider} />
-                      </div>
-                    ))}
+                    {!isEmpty(leagueData.drivers)
+                      ? leagueData.drivers.map((driver) => (
+                          <div key={driver.name} className={classes.driverName}>
+                            <img
+                              src={driver.img}
+                              alt="driver"
+                              className={classes.driverImg}
+                            />
+                            {driver.name}
+                            <Divider className={classes.divider} />
+                          </div>
+                        ))
+                      : null}
                   </div>
                 </AccordionDetails>
               </Accordion>
