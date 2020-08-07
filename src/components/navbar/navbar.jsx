@@ -46,7 +46,7 @@ const InnerTopNavBar = () => {
 
   return (
     <Navbar type="light" expand="md" sticky="top" className={classes.main}>
-      <NavbarBrand href="#">
+      <NavbarBrand href="#" className={classes.navbarBrand}>
         <span className={classes.brand}>SPOOLRACING.</span>
       </NavbarBrand>
       <Nav justified>

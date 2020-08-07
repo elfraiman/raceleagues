@@ -32,8 +32,15 @@
     justify-content: center;
   }
 
+  .navbarBrand {
+    margin: 0;
+  }
   .brand {
+    width: 100%;
     font-size: 25px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
   }
 
   .user {
