@@ -9,7 +9,7 @@ import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import DoneIcon from "@material-ui/icons/DoneAllOutlined";
 import ErrorIcon from "@material-ui/icons/ErrorOutline";
 import WarningIcon from "@material-ui/icons/WarningOutlined";
-
+import CookieConsent from "react-cookie-consent";
 // optional configuration
 const options = {
   // you can also just use 'bottom center'
@@ -36,6 +36,14 @@ function App() {
         <TopNavBar />
         <Routes />
         <Footer />
+        <CookieConsent
+          enableDeclineButton
+          onDecline={() => {
+            console.log('Declined cookies')
+          }}
+        >
+          Spoolracing.com uses cookies to enhance the user experience!
+        </CookieConsent>
       </AlertProvider>
     </main>
   );
