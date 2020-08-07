@@ -79,7 +79,7 @@ const InnerRacePage = () => {
   };
 
   return (
-    <div className={classes.racePage}>
+    <div>
       {raceData && trackData ? (
         <div className={classes.main}>
           <span className={classes.title}>
