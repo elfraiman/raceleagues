@@ -1,7 +1,7 @@
 import { LinearProgress } from "@material-ui/core";
-import { isEmpty } from "lodash";
+import { isEmpty, isString } from "lodash";
 import moment from "moment";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { animated, useSpring } from "react-spring";
 import { Spring } from "react-spring/renderprops";
@@ -16,14 +16,44 @@ import RaceProvider, { RaceContext } from "../../providers/raceProvider";
 import UserProvider, { UserContext } from "../../providers/userProvider";
 import classes from "./homepage.module.scss";
 
-
-
 const InnerHomePage = () => {
   const fadeIn = useSpring({ opacity: 1, from: { opacity: 0 } });
   const history = useHistory();
   const raceProvider = useContext(RaceContext);
   const userProvider = useContext(UserContext);
+  const [activeEvents, setActiveEvents] = useState([]);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
 
+  useEffect(() => {
+    const races = raceProvider.races;
+    const upcomingArray = [];
+    const activeArray = [];
+    if (!isEmpty(races)) {
+      races.forEach((race) => {
+        if (isString(race.raceDate)) {
+          activeArray.push(race);
+          return;
+        }
+        if (race.raceDate.toDate() > new Date()) {
+          upcomingArray.push(race);
+        } else {
+          activeArray.push(...activeEvents, race);
+        }
+      });
+    }
+
+    console.log(activeArray, upcomingArray, 'arrays')
+
+    setActiveEvents(activeArray);
+    setUpcomingEvents(upcomingArray);
+
+    console.log(
+      activeEvents,
+      "activeevents",
+      upcomingEvents,
+      "upcoming events"
+    );
+  }, [raceProvider]);
 
   const navigateToRaceOrLeague = (raceOrLeague, eventName) => {
     if (raceOrLeague === "endurance") {
@@ -69,7 +99,7 @@ const InnerHomePage = () => {
               >
                 {(props) => (
                   <div className={classes.leagues} style={{ ...props }}>
-                    {raceProvider.races.map((race, i) => (
+                    {upcomingEvents.map((race, i) => (
                       <div
                         className={classes.leagueCard}
                         key={i}
@@ -79,9 +109,13 @@ const InnerHomePage = () => {
                       >
                         <LeagueCard
                           header={race.title.toUpperCase()}
-                          date={moment(race.raceDate.toDate(), "en").format(
-                            "LLLL, UTCZZ"
-                          )}
+                          date={
+                            isString(race.raceDate)
+                              ? race.raceDate
+                              : moment(race.raceDate.toDate(), "en").format(
+                                  "LLLL, UTCZZ"
+                                )
+                          }
                           type={race.type.toUpperCase()}
                           carClass={race.carClass.toUpperCase()}
                           image={race.img}
@@ -111,28 +145,31 @@ const InnerHomePage = () => {
               >
                 {(props) => (
                   <div className={classes.leagues} style={{ ...props }}>
-                    <div className={classes.leagueCard}>
-                      <LeagueCard
-                        header="3 Hours of Spa"
-                        date="THURSDAYS AT 8:00PM UTC+2"
-                        type="Endurance Race"
-                        carClass="MIXED"
-                        image={spa3mixed}
-                        button="More info"
-                        footer="Rookie"
-                      />
-                    </div>
-                    <div className={classes.leagueCard}>
-                      <LeagueCard
-                        header="3 Hours of Paul Ricard"
-                        date="SATURDAYS AT 15:00PM UTC+2"
-                        type="Endurance Race"
-                        carClass="GT3"
-                        image={paulricard3gt3}
-                        button="Join"
-                        footer="Rookie"
-                      />
-                    </div>
+                    {activeEvents.map((race, i) => (
+                      <div
+                        className={classes.leagueCard}
+                        key={i}
+                        onClick={() =>
+                          navigateToRaceOrLeague(race.type, race.name)
+                        }
+                      >
+                        <LeagueCard
+                          header={race.title.toUpperCase()}
+                          date={
+                            isString(race.raceDate)
+                              ? race.raceDate
+                              : moment(race.raceDate.toDate(), "en").format(
+                                  "LLLL, UTCZZ"
+                                )
+                          }
+                          type={race.type.toUpperCase()}
+                          carClass={race.carClass.toUpperCase()}
+                          image={race.img}
+                          button="More info"
+                          footer={race.level.toUpperCase()}
+                        />
+                      </div>
+                    ))}
                   </div>
                 )}
               </Spring>
@@ -250,7 +287,7 @@ const HomePage = () => {
   return (
     <RaceProvider>
       <UserProvider>
-      <InnerHomePage />
+        <InnerHomePage />
       </UserProvider>
     </RaceProvider>
   );

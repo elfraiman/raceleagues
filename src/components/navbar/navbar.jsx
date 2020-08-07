@@ -60,7 +60,6 @@ const InnerTopNavBar = () => {
             Team
           </NavLink>
         </NavItem>
-        <NavItem></NavItem>
         <NavItem>
           <NavLink href="#" className={classes.navLink}>
             Rules
@@ -74,13 +73,19 @@ const InnerTopNavBar = () => {
             <DropdownItem onClick={triggerFuelCalculatorModal}>
               Fuel Calculator
             </DropdownItem>
-            <DropdownItem>Discord</DropdownItem>
+            <DropdownItem
+              onClick={() => window.open("https://discord.gg/WBvT7AU")}
+            >
+              Discord
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </Nav>
 
-     
-      <FuelCalculator fuelCalculatorModalState={fuelCalculatorModalState} triggerFuelCalculatorModal={triggerFuelCalculatorModal} />
+      <FuelCalculator
+        fuelCalculatorModalState={fuelCalculatorModalState}
+        triggerFuelCalculatorModal={triggerFuelCalculatorModal}
+      />
 
       {!isEmpty(userProvider.user) ? (
         <Dropdown open={profileDropDownState} toggle={toggleProfileDropDown}>
