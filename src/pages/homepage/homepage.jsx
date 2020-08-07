@@ -69,7 +69,9 @@ const InnerHomePage = () => {
             <em className={classes.highlight}>Leagues</em> no matter your skill
             level, we have a race for you.
           </h3>
-          <Button onClick={() => joinWithFB()}>JOIN NOW</Button>
+          {isEmpty(userProvider.user) ? (
+            <Button onClick={() => joinWithFB()}>JOIN NOW</Button> 
+          ) : null}
         </div>
       </animated.div>
 
