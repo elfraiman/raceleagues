@@ -120,7 +120,7 @@
 }
 
 /* Portrait and Landscape */
-@media (min-device-width: 375px) and (max-device-width: 1024px) {
+@media (min-device-width: 200px) and (max-device-width: 1024px) {
  .main {
 	 justify-content: center;
 	 align-items: center;
