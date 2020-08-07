@@ -2,7 +2,6 @@
   display: grid;
   grid-template: auto / 1fr 1fr;
   grid-column-gap: 86px;
-  padding: 36px;
   padding: 36px 200px 36px 200px;
   .title {
     margin-bottom: 86px;
@@ -76,5 +75,31 @@
         margin: 6px 0px 6px 0px;
       }
     }
+  }
+}
+
+@media (min-device-width: 375px) and (max-device-width: 1300px) {
+
+  .main {
+    grid-template: auto / 1fr;
+    grid-row-gap: 16px;
+    padding: 16px;
+
+    .title {
+      margin-bottom: 26px;
+    }
+
+    .information {
+      grid-column: 1/2;
+      grid-row: 2/3;
+      
+    }
+
+    .markdown {
+      grid-column: 1/2;
+      grid-row: 1/2;
+  
+    }
+
   }
 }

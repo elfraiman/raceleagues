@@ -40,3 +40,25 @@
     }
   }
 }
+
+@media (min-device-width: 375px) and (max-device-width: 1300px) {
+  .footer {
+    grid-template: auto / 1fr;
+    padding: 16px;
+
+    h3 {
+      margin: 0;
+    }
+    .center {
+      grid-column: 1/2;
+
+      p {
+        margin: 0;
+      }
+    }
+
+    .right {
+      grid-column: 1/2;
+    }
+  }
+}

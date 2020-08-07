@@ -1,116 +1,183 @@
 .main {
-	display: grid;
+  display: grid;
 }
-
+.activeOrUpcoming {
+	font-size: 36px;
+	font-weight: 700;
+	margin: 16px;
+	text-align:center;
+}
 .header {
-	display: grid;
-	width: 100%;
-	grid-template: auto / 1fr 1fr;
-	margin-bottom: 36px;
-	img {
-		width: 500px;
-		height: 500px;
-	}
+  display: grid;
+  width: 100%;
+  grid-template: auto / 1fr 1fr;
+  margin-bottom: 36px;
+  img {
+    width: 500px;
+    height: 500px;
+  }
 
-	.rightDiv {
-		grid-column: 2/3;
-		justify-self: center;
-		align-self: center;
+  .rightDiv {
+    grid-column: 2/3;
+    justify-self: center;
+    align-self: center;
 
-		h3 {
-			font-size: 65px;
-			line-height: 70px;
-			font-weight: 700;
-		}
-	}
+    h3 {
+      font-size: 65px;
+      line-height: 70px;
+      font-weight: 700;
+    }
+  }
 }
 
 .leagues {
-	justify-self: center;
-	margin-bottom: 66px;
-	width: 600px;
-	display: grid;
-	grid-gap: 16px;
-	grid-template: auto / 1fr 1fr 1fr;
-	justify-content: center;
-
-	.leagueCard {
-		justify-self: center;	
-		align-self: center;
-	}
+  justify-self: center;
+  margin-bottom: 66px;
+ display: grid;
+  grid-gap: 16px;
+  grid-template: auto / 1fr 1fr 1fr;
+  justify-content: center;
+	padding: 16px;
+  .leagueCard {
+    justify-self: center;
+    align-self: center;
+  }
 }
 
 .checkeredGrid {
-	display: grid;
-	width: 100%;
+  display: grid;
+  width: 100%;
   grid-template: 1fr 1fr / 1fr 1fr;
   margin-top: 56px;
-	
+
   padding: 16px;
   min-height: 460px;
 
-	.racesTopLeft {
-		grid-column: 1/2;
-		
-		justify-content: center;
-		align-items: center;
-		display:flex;
+  .racesTopLeft {
+    grid-column: 1/2;
+
+    justify-content: center;
+    align-items: center;
+    display: flex;
     h3 {
-			font-size: 55px;
-			color: black;
-			line-height: 65px;
-			font-weight: 700;
-			will-change: transform, opacity;
+      font-size: 55px;
+      color: black;
+      line-height: 65px;
+      font-weight: 700;
+      will-change: transform, opacity;
     }
-	}
+  }
 
-	.racesTopRight {
-		grid-column: 2/3;
-		justify-content: center;
-		align-items: center;
-		display:flex;
-		cursor: pointer;
-		img {
-			width: 100%;
-			height: 100%;
-		}
-	}
+  .racesTopRight {
+    grid-column: 2/3;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
 
-	.racesBottomLeft {
-
-		img {
-			width: 100%;
-			height: 100%;
-		}
-	}
-	.racesBottomRight {
-		grid-column: 2/3;
-			img {
-			width: 100%;
-			height: 100%;
-		}
-	}
+  .racesBottomLeft {
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .racesBottomRight {
+    grid-column: 2/3;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 
 .highlight {
-	font-style: normal;
-	border-radius: 1em 0 1em 0;
-	text-shadow: 1px 1px 1px #fff;
-	background-image:
-		linear-gradient(-100deg,
-			rgba(150, 213, 255, 0.15),
-			rgba(150, 222, 255, 0.8) 100%,
-			rgba(150, 222, 255, 0.25));
+  font-style: normal;
+  border-radius: 1em 0 1em 0;
+  text-shadow: 1px 1px 1px #fff;
+  background-image: linear-gradient(
+    -100deg,
+    rgba(150, 213, 255, 0.15),
+    rgba(150, 222, 255, 0.8) 100%,
+    rgba(150, 222, 255, 0.25)
+  );
 }
 
 .highlightYellow {
   font-style: normal;
   border-radius: 1em 0 1em 0;
   text-shadow: 1px 1px 1px #fff;
-  background-image: 
-    linear-gradient(-100deg, 
-      rgba(202, 202, 202, 0.15),
-      rgba(187, 187, 187, 0.8) 100%, 
-      rgba(160, 160, 160, 0.25)
-    );
+  background-image: linear-gradient(
+    -100deg,
+    rgba(202, 202, 202, 0.15),
+    rgba(187, 187, 187, 0.8) 100%,
+    rgba(160, 160, 160, 0.25)
+  );
 }
+
+/* Portrait and Landscape */
+@media (min-device-width: 375px) and (max-device-width: 1024px) {
+ .main {
+	 justify-content: center;
+	 align-items: center;
+ }
+	
+	.header {
+    grid-template: auto / 1fr;
+		margin-bottom: 16px;
+		img {
+			width: 100%;
+			height: auto;
+		}
+    .rightDiv {
+			grid-row: 1/2;
+			grid-column: 1/2;
+			padding: 16px;
+			h3 {
+				font-size: 45px;
+				line-height: 45px;
+			}
+    }
+
+    .leftDiv {
+			grid-row: 2/3;
+				grid-column: 1/2;
+    }
+	}
+	
+	.leagues {
+		grid-template: auto/ 1fr;
+		margin-bottom: 16px;
+		width: 100%;
+		padding: 16px;
+
+		.leagueCard {
+			margin-top: 16px;
+		}
+	}
+
+	.checkeredGrid {
+		grid-template: auto / 1fr;
+		margin-top: 16px;
+
+		.racesTopLeft {
+			grid-column: 1/2;
+			h3 {
+		font-size: 35px;
+		line-height: 40px;
+}
+		}
+
+		.racesTopRight {
+			grid-column: 1/2;
+		}
+		.racesBottomRight {
+			grid-column: 1/2;
+		}
+	}
+}
+

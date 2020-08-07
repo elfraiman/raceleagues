@@ -108,3 +108,35 @@
 .accordionCard {
   margin-top: 16px;
 }
+
+
+
+@media (min-device-width: 375px) and (max-device-width: 1300px) {
+  .racePage {
+    padding: 16px;
+  }
+  .main {
+    grid-template: auto / 1fr !important;
+    grid-row-gap: 16px;
+
+    .title {
+      grid-row: 1/2 !important;
+      grid-column: 1/2 !important;
+
+      h2 {
+        font-size: 40px;
+        line-height: 45px;
+      }
+    }
+
+    .raceInfo {
+      grid-row: 2/3 !important;
+      grid-column: 1/2 !important;
+    }
+
+    .trackData {
+      grid-row: 3/4 !important;
+      grid-column: 1/2 !important;
+    }
+  }
+}

@@ -42,17 +42,8 @@ const InnerHomePage = () => {
       });
     }
 
-    console.log(activeArray, upcomingArray, 'arrays')
-
     setActiveEvents(activeArray);
     setUpcomingEvents(upcomingArray);
-
-    console.log(
-      activeEvents,
-      "activeevents",
-      upcomingEvents,
-      "upcoming events"
-    );
   }, [raceProvider]);
 
   const navigateToRaceOrLeague = (raceOrLeague, eventName) => {
@@ -82,9 +73,7 @@ const InnerHomePage = () => {
         </div>
       </animated.div>
 
-      <h2 style={{ textAlign: "center", marginBottom: 36, marginTop: 36 }}>
-        Upcoming events
-      </h2>
+      <h2 className={classes.activeOrUpcoming}>Upcoming events</h2>
 
       {!isEmpty(raceProvider.races) ? (
         <React.Fragment>
@@ -130,9 +119,7 @@ const InnerHomePage = () => {
             )}
           </VisibilitySensor>
 
-          <h2 style={{ textAlign: "center", marginBottom: 36 }}>
-            Active Events
-          </h2>
+          <h2 className={classes.activeOrUpcoming}>Active Events</h2>
 
           <VisibilitySensor partialVisibility>
             {({ isVisible }) => (
