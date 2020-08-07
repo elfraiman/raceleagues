@@ -88,7 +88,7 @@ const InnerTopNavBar = () => {
       />
 
       {!isEmpty(userProvider.user) ? (
-        <Dropdown open={profileDropDownState} toggle={toggleProfileDropDown}>
+        <Dropdown open={profileDropDownState} toggle={toggleProfileDropDown} className={classes.dropdown}>
           <DropdownToggle nav>
             <div className={classes.user}>
               <img src={userProvider.user.img} alt="your profile" />
