@@ -13,7 +13,8 @@
   display: grid;
   grid-template: auto/ 1fr 1fr 1fr;
   grid-gap: 16px;
- padding: 36px 200px 36px 200px;
+  padding: 36px 200px 36px 200px;
+
   .card {
     .cardHeader {
       img {
@@ -140,6 +141,10 @@
 }
 
 @media (min-device-width: 200px) and (max-device-width: 1300px) {
+  .racesMain {
+    grid-template: auto/ 1fr;
+    padding: 16px;
+  }
   .main {
     grid-template: auto / 1fr;
     grid-row-gap: 16px;
