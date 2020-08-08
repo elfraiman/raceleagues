@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import firebase from "../firebase.js";
 import { useAlert } from "react-alert";
 import { isEmpty } from "lodash";
@@ -17,15 +17,17 @@ const UserProvider = ({ children }) => {
   const alert = useAlert();
   const authProvider = new firebase.auth.FacebookAuthProvider();
 
-  firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-      const userDoc = database.collection("users").doc(user.email);
-      userDoc.get().then((user) => setUser(user.data()));
-    } else {
-      // No user is signed in.
-      setUser(false);
-    }
-  });
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        const userDoc = database.collection("users").doc(user.email);
+        userDoc.get().then((user) => setUser(user.data()));
+      } else {
+        // No user is signed in.
+        setUser(false);
+      }
+    });
+  }, [firebase.auth()]);
 
   const logout = () => {
     firebase

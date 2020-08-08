@@ -1,20 +1,21 @@
-import { LinearProgress } from "@material-ui/core";
-import { isEmpty, isString } from "lodash";
-import moment from "moment";
-import React, { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { animated, useSpring } from "react-spring";
-import { Spring } from "react-spring/renderprops";
-import VisibilitySensor from "react-visibility-sensor";
-import { Button } from "shards-react";
-import paulricard3gt3 from "../../assets/images/3hourspaulricard.jpg";
-import formulaPic from "../../assets/images/formula-e.png";
-import spa3mixed from "../../assets/images/spa3hoursmixed.jpg";
-import spoolracingbmw from "../../assets/images/spoolracingbmw.png";
-import LeagueCard from "../../components/league-card/leagueCard";
-import RaceProvider, { RaceContext } from "../../providers/raceProvider";
-import UserProvider, { UserContext } from "../../providers/userProvider";
-import classes from "./homepage.module.scss";
+import { LinearProgress } from '@material-ui/core';
+import { isEmpty, isString } from 'lodash';
+import moment from 'moment';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { animated, useSpring } from 'react-spring';
+import { Spring } from 'react-spring/renderprops';
+import VisibilitySensor from 'react-visibility-sensor';
+import { Button } from 'shards-react';
+
+import paulricard3gt3 from '../../assets/images/3hourspaulricard.jpg';
+import gt3topview from '../../assets/images/mercgt3top.jpg';
+import spa3mixed from '../../assets/images/spa3hoursmixed.jpg';
+import spoolracingbmw from '../../assets/images/spoolracingbmw.png';
+import LeagueCard from '../../components/league-card/leagueCard';
+import RaceProvider, { RaceContext } from '../../providers/raceProvider';
+import UserProvider, { UserContext } from '../../providers/userProvider';
+import classes from './homepage.module.scss';
 
 const InnerHomePage = () => {
   const fadeIn = useSpring({ opacity: 1, from: { opacity: 0 } });
@@ -23,7 +24,8 @@ const InnerHomePage = () => {
   const userProvider = useContext(UserContext);
   const [activeEvents, setActiveEvents] = useState([]);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
-
+  console.log("homepage")
+  
   useEffect(() => {
     const races = raceProvider.races;
     const upcomingArray = [];
@@ -61,7 +63,7 @@ const InnerHomePage = () => {
   return (
     <div className={classes.main}>
       <animated.div style={fadeIn} className={classes.header}>
-        <img src={formulaPic} alt="formula-e" />
+        <img src={gt3topview} alt="formula-e" />
 
         <div className={classes.rightDiv}>
           <h3>
@@ -70,7 +72,7 @@ const InnerHomePage = () => {
             level, we have a race for you.
           </h3>
           {isEmpty(userProvider.user) ? (
-            <Button onClick={() => joinWithFB()}>JOIN NOW</Button> 
+            <Button onClick={() => joinWithFB()}>JOIN NOW</Button>
           ) : null}
         </div>
       </animated.div>
