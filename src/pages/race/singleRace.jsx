@@ -134,9 +134,9 @@ const InnerRacePage = () => {
                 </h5>
                 <h5>
                   <span>Race date:</span> <br />{" "}
-                  {isString(raceData.raceDate)
-                    ? raceData.raceDate
-                    : moment(raceData.raceDate.toDate(), "en").format(
+                  {isString(raceData.races[0].raceDate)
+                    ? raceData.races[0].raceDate
+                    : moment(raceData.races[0].raceDate.toDate(), "en").format(
                         "LLLL, UTCZZ"
                       )}{" "}
                   <a href="https://time.is/UTC+2">Check UTC+2</a>

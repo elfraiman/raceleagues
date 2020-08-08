@@ -1,21 +1,21 @@
-import { LinearProgress } from '@material-ui/core';
-import { isEmpty, isString } from 'lodash';
-import moment from 'moment';
-import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { animated, useSpring } from 'react-spring';
-import { Spring } from 'react-spring/renderprops';
-import VisibilitySensor from 'react-visibility-sensor';
-import { Button } from 'shards-react';
+import { LinearProgress } from "@material-ui/core";
+import { isEmpty, isString } from "lodash";
+import moment from "moment";
+import React, { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { animated, useSpring } from "react-spring";
+import { Spring } from "react-spring/renderprops";
+import VisibilitySensor from "react-visibility-sensor";
+import { Button } from "shards-react";
 
-import paulricard3gt3 from '../../assets/images/3hourspaulricard.jpg';
-import gt3topview from '../../assets/images/mercgt3top.jpg';
-import spa3mixed from '../../assets/images/spa3hoursmixed.jpg';
-import spoolracingbmw from '../../assets/images/spoolracingbmw.png';
-import LeagueCard from '../../components/league-card/leagueCard';
-import RaceProvider, { RaceContext } from '../../providers/raceProvider';
-import UserProvider, { UserContext } from '../../providers/userProvider';
-import classes from './homepage.module.scss';
+import paulricard3gt3 from "../../assets/images/3hourspaulricard.jpg";
+import gt3topview from "../../assets/images/mercgt3top.jpg";
+import spa3mixed from "../../assets/images/spa3hoursmixed.jpg";
+import spoolracingbmw from "../../assets/images/spoolracingbmw.png";
+import LeagueCard from "../../components/league-card/leagueCard";
+import RaceProvider, { RaceContext } from "../../providers/raceProvider";
+import UserProvider, { UserContext } from "../../providers/userProvider";
+import classes from "./homepage.module.scss";
 
 const InnerHomePage = () => {
   const fadeIn = useSpring({ opacity: 1, from: { opacity: 0 } });
@@ -24,8 +24,8 @@ const InnerHomePage = () => {
   const userProvider = useContext(UserContext);
   const [activeEvents, setActiveEvents] = useState([]);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
-  console.log("homepage")
-  
+  console.log("homepage");
+
   useEffect(() => {
     const races = raceProvider.races;
     const upcomingArray = [];
@@ -36,7 +36,7 @@ const InnerHomePage = () => {
           activeArray.push(race);
           return;
         }
-        if (race.raceDate.toDate() > new Date()) {
+        if (race.races[0].raceDate.toDate() > new Date()) {
           upcomingArray.push(race);
         } else {
           activeArray.push(...activeEvents, race);
@@ -102,13 +102,10 @@ const InnerHomePage = () => {
                       >
                         <LeagueCard
                           header={race.title.toUpperCase()}
-                          date={
-                            isString(race.raceDate)
-                              ? race.raceDate
-                              : moment(race.raceDate.toDate(), "en").format(
-                                  "LLLL, UTCZZ"
-                                )
-                          }
+                          date={moment(
+                            race.races[0].raceDate.toDate(),
+                            "en"
+                          ).format("LLLL, UTCZZ")}
                           type={race.type.toUpperCase()}
                           carClass={race.carClass.toUpperCase()}
                           image={race.img}
@@ -146,13 +143,9 @@ const InnerHomePage = () => {
                       >
                         <LeagueCard
                           header={race.title.toUpperCase()}
-                          date={
-                            isString(race.raceDate)
-                              ? race.raceDate
-                              : moment(race.raceDate.toDate(), "en").format(
-                                  "LLLL, UTCZZ"
-                                )
-                          }
+                          date={moment(race.races[0].raceDate.toDate(), "en").format(
+                            "LLLL, UTCZZ"
+                          )}
                           type={race.type.toUpperCase()}
                           carClass={race.carClass.toUpperCase()}
                           image={race.img}

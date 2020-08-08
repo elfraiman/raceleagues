@@ -163,9 +163,9 @@ const InnerLeaguePage = () => {
                   <h3>{leagueData.title.toUpperCase()}</h3>
                   <h6>
                     {" "}
-                    {isString(leagueData.raceDate)
-                      ? leagueData.raceDate
-                      : moment(leagueData.raceDate.toDate(), "en").format(
+                    {isString(leagueData.races[0].raceDate)
+                      ? leagueData.races[0].raceDate
+                      : moment(leagueData.races[0].raceDate.toDate(), "en").format(
                           "LLLL, UTCZZ"
                         )}
                   </h6>
@@ -186,9 +186,9 @@ const InnerLeaguePage = () => {
                     <p>
                       Start date:{" "}
                       <b>
-                        {isString(leagueData.raceDate)
-                          ? leagueData.raceDate
-                          : moment(leagueData.raceDate.toDate(), "en").format(
+                        {isString(leagueData.races[0].raceDate)
+                          ? leagueData.races[0].raceDate
+                          : moment(leagueData.races[0].raceDate.toDate(), "en").format(
                               "LLLL, UTCZZ"
                             )}
                       </b>
