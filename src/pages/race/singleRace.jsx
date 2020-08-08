@@ -77,7 +77,7 @@ const InnerRacePage = () => {
         console.error("Error updating document: ", error);
       });
   };
-
+  console.log('test')
   return (
     <div>
       {raceData && trackData ? (

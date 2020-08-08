@@ -1,8 +1,57 @@
+.tabs {
+  .tabsAppBar {
+    background-color: white;
+    .tab {
+      color: black;
+      font-weight: 700;
+    }
+  }
+}
+
+.racesMain {
+  margin-top: 26px;
+  display: grid;
+  grid-template: auto/ 1fr 1fr 1fr;
+  grid-gap: 16px;
+ padding: 36px 200px 36px 200px;
+  .card {
+    .cardHeader {
+      img {
+        width: 30px;
+        height: 20px;
+        margin-right: 16px;
+      }
+      font-weight: 700;
+      color: black;
+    }
+    .cardTitle {
+      font-weight: 700;
+    }
+   .row {
+     color: black;
+     display: flex;
+     width: 100%;
+     justify-content: space-between;
+      svg {
+        width: 20px;
+        margin-right: 16px;
+      }
+     font-weight: 700;
+     font-size: 12px;
+   }
+  }
+  img {
+    width: 100%;
+    height: 200px;
+  }
+}
+
 .main {
   display: grid;
   grid-template: auto / 1fr 1fr;
   grid-column-gap: 86px;
   padding: 36px 200px 36px 200px;
+
   .title {
     margin-bottom: 86px;
     h3 {
@@ -21,28 +70,40 @@
   .information {
     grid-column: 2/3;
 
-    img {
-      width: 100%;
-      border-radius: 0.25rem;
-    }
-
-    .infoCard {
-      margin-top: 16px;
-      min-height: 700px;
-      .cardBody {
-        p {
-          font-weight: 500;
+    .tabs {
+      .tabsAppBar {
+        padding: 0;
+        background-color: white;
+        .tab {
+          font-weight: 700;
           color: black;
-          margin: 16px;
-          margin-left: 0;
-          b {
-            font-weight: 700;
-            padding-left: 16px;
-          }
         }
       }
     }
   }
+
+  img {
+    width: 100%;
+    border-radius: 0.25rem;
+  }
+
+  .infoCard {
+    margin-top: 16px;
+    min-height: 700px;
+    .cardBody {
+      p {
+        font-weight: 500;
+        color: black;
+        margin: 16px;
+        margin-left: 0;
+        b {
+          font-weight: 700;
+          padding-left: 16px;
+        }
+      }
+    }
+  }
+
   .btn {
     margin-top: 16px;
     width: 100%;
@@ -79,7 +140,6 @@
 }
 
 @media (min-device-width: 200px) and (max-device-width: 1300px) {
-
   .main {
     grid-template: auto / 1fr;
     grid-row-gap: 16px;
@@ -92,14 +152,11 @@
     .information {
       grid-column: 1/2;
       grid-row: 2/3;
-      
     }
 
     .markdown {
       grid-column: 1/2;
       grid-row: 1/2;
-  
     }
-
   }
 }

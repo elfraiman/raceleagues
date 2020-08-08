@@ -8,7 +8,7 @@ const database = firebase.firestore();
 
 const RaceProvider = ({ children }) => {
   const [races, setRaces] = useState(null);
-
+  
   useEffect(() => {
     database
       .collection("championships")
@@ -25,7 +25,7 @@ const RaceProvider = ({ children }) => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [database]);
 
   const fetchRace = (param) => {
     if (!isEmpty(races)) {
