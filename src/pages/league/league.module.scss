@@ -115,9 +115,11 @@
   display: grid;
   padding: 36px 200px 36px 200px;
   grid-template: auto / 1fr 1fr 1fr;
+  min-height: 70vh;
 
   .driverCard {
     padding: 16px;
+    max-height: 90px;
     .row {
       color: black;
       display: grid;
@@ -180,6 +182,11 @@
 @media (min-device-width: 200px) and (max-device-width: 1300px) {
   .racesMain {
     grid-template: auto/ 1fr;
+    padding: 16px;
+  }
+
+  .driversMain {
+    grid-template: auto / 1fr;
     padding: 16px;
   }
   .main {
