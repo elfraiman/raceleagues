@@ -56,7 +56,7 @@ const InnerRacePage = () => {
     const drivers = raceData.drivers;
     const registeredDriversDocuments = [];
 
-  for (let i = 0; i < drivers.length; i++) {
+    for (let i = 0; i < drivers.length; i++) {
       await userProvider.fetchUsersDocument(drivers[i]).then((userDoc) => {
         registeredDriversDocuments.push(userDoc);
       });
@@ -133,8 +133,8 @@ const InnerRacePage = () => {
                   {isString(raceData.races[0].raceDate)
                     ? raceData.races[0].raceDate
                     : moment(raceData.races[0].raceDate.toDate(), "en").format(
-                        "LLLL, UTCZZ"
-                      )}{" "}
+                      "LLLL, UTCZZ"
+                    )}{" "}
                   <a href="https://time.is/UTC+2">Check UTC+2</a>
                 </h5>
                 <h5>
@@ -155,17 +155,25 @@ const InnerRacePage = () => {
                   <div className={classes.driversWrapper}>
                     {!isEmpty(registeredDrivers)
                       ? registeredDrivers.map((driver, i) => (
-                          <div key={i} className={classes.driverName}>
-                            <img
-                              src={driver.img}
-                              alt="driver"
-                              className={classes.driverImg}
-                            />
+                        <div key={i} className={classes.driver}>
+                          <img
+                            src={driver.img}
+                            alt="driver"
+                            className={classes.driverImg}
+                          />
+
+                          <span className={classes.driversName}>
                             {driver.name}
-                            <Divider className={classes.divider} />
-                          </div>
-                        ))
+
+                            <span className={classes.driverDiscord}>
+                              {driver.discord}
+                            </span>
+                          </span>
+
+                        </div>
+                      ))
                       : null}
+                    <Divider className={classes.divider} />
                   </div>
                 </AccordionDetails>
               </Accordion>
@@ -196,8 +204,8 @@ const InnerRacePage = () => {
           </div>
         </div>
       ) : (
-        <LinearProgress />
-      )}
+          <LinearProgress />
+        )}
     </div>
   );
 };
