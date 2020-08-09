@@ -3,7 +3,6 @@ import { isEmpty, isString } from "lodash";
 import moment from "moment";
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { animated, useSpring } from "react-spring";
 import { Spring } from "react-spring/renderprops";
 import VisibilitySensor from "react-visibility-sensor";
 import { Button } from "shards-react";
