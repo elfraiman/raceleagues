@@ -148,7 +148,7 @@ const InnerRacePage = () => {
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <h6 className={classes.heading}>
-                    Registered Racers ({raceData.drivers.length})
+                    Registered Drivers ({raceData.drivers.length})
                   </h6>
                 </AccordionSummary>
                 <AccordionDetails>

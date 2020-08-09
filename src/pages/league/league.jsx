@@ -222,7 +222,7 @@ const InnerLeaguePage = () => {
                   <Accordion className={classes.accordion}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                       <h6 className={classes.heading}>
-                        Registered Racers ({leagueData.drivers.length})
+                        Registered Drivers ({leagueData.drivers.length})
                       </h6>
                     </AccordionSummary>
                     <AccordionDetails>
