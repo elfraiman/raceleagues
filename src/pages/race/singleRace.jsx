@@ -9,49 +9,35 @@ import React, { useContext, useEffect, useState } from "react";
 import ReactHtmlParser from "react-html-parser";
 import { useParams } from "react-router-dom";
 import { Button, Card, CardBody } from "shards-react";
-import firebase from "../../firebase.js";
-import ChampionshipProvider, { ChampionshipContext } from "../../providers/championshipProvider";
+import ChampionshipProvider, {
+  ChampionshipContext,
+} from "../../providers/championshipProvider";
 import UserProvider, { UserContext } from "../../providers/userProvider";
 import classes from "./singleRace.module.scss";
 import { useAlert } from "react-alert";
 import { Divider } from "@material-ui/core";
-
-const database = firebase.firestore();
+import TrackProvider, { TrackContext } from "../../providers/trackProvider.jsx";
 
 const InnerRacePage = () => {
   const championshipProvider = useContext(ChampionshipContext);
+  const trackProvider = useContext(TrackContext);
   const userProvider = useContext(UserContext);
   const [trackData, setTrack] = useState("");
   const { race } = useParams();
   const alert = useAlert();
   const raceData = championshipProvider.fetchChampionship(race);
-
-  useEffect(() => {
-    if (!isEmpty(raceData)) {
-      database
-        .collection("tracks")
-        .doc(raceData.track)
-        .get()
-        .then((response) => {
-          setTrack(response.data());
-        });
-    }
-  }, [championshipProvider]);
+  const [registeredDrivers, setRegisteredDrivers] = useState([]);
 
   const joinRace = async () => {
     const user = await userProvider.user;
-    const championshipRef = database
-      .collection("championships")
-      .doc(raceData.name);
+    const championship = championshipProvider.fetchChampionship(raceData.id);
 
-    const championshipData = (await championshipRef.get()).data();
-
-    const driverAlreadyRegistered = championshipData.drivers.filter(
-      (driver) => driver.uid === user.uid
-    );
+    const driverAlreadyRegistered = !isEmpty(championship.drivers)
+      ? championship.drivers.filter((driver) => driver.uid === user.uid)
+      : false;
 
     const noAvailableSlots =
-      championshipData.drivers.length === championshipData.availability;
+      championship.drivers.length === championship.availability;
 
     if (!isEmpty(driverAlreadyRegistered)) {
       alert.success("You are already registered for this event!");
@@ -62,22 +48,32 @@ const InnerRacePage = () => {
       alert.error("No available slots!");
       return;
     }
-
-    championshipRef
-      .update({
-        drivers: [
-          ...championshipData.drivers,
-         user
-        ],
-      })
-      .then(function() {
-        alert.success("You have successfuly signed up!");
-      })
-      .catch(function(error) {
-        console.error("Error updating document: ", error);
-      });
+    const event = raceData;
+    championshipProvider.updateChampionshipDrivers(user, event);
   };
-  console.log('test')
+
+  const generatedRegisteredDrivers = async () => {
+    const drivers = raceData.drivers;
+    const registeredDriversDocuments = [];
+
+  for (let i = 0; i < drivers.length; i++) {
+      await userProvider.fetchUsersDocument(drivers[i]).then((userDoc) => {
+        registeredDriversDocuments.push(userDoc);
+      });
+    }
+
+    setRegisteredDrivers(registeredDriversDocuments);
+  };
+
+  useEffect(() => {
+    if (!isEmpty(raceData)) {
+      const track = trackProvider.fetchTrack(raceData.track);
+      setTrack(track);
+
+      generatedRegisteredDrivers();
+    }
+  }, [championshipProvider, userProvider.fetchUsersDocument]);
+
   return (
     <div>
       {raceData && trackData ? (
@@ -157,17 +153,19 @@ const InnerRacePage = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                   <div className={classes.driversWrapper}>
-                    {raceData.drivers.map((driver) => (
-                      <div key={driver.name} className={classes.driverName}>
-                        <img
-                          src={driver.img}
-                          alt="driver"
-                          className={classes.driverImg}
-                        />
-                        {driver.name}
-                        <Divider className={classes.divider} />
-                      </div>
-                    ))}
+                    {!isEmpty(registeredDrivers)
+                      ? registeredDrivers.map((driver, i) => (
+                          <div key={i} className={classes.driverName}>
+                            <img
+                              src={driver.img}
+                              alt="driver"
+                              className={classes.driverImg}
+                            />
+                            {driver.name}
+                            <Divider className={classes.divider} />
+                          </div>
+                        ))
+                      : null}
                   </div>
                 </AccordionDetails>
               </Accordion>
@@ -207,9 +205,11 @@ const InnerRacePage = () => {
 const RacePage = () => {
   return (
     <ChampionshipProvider>
-      <UserProvider>
-        <InnerRacePage />
-      </UserProvider>
+      <TrackProvider>
+        <UserProvider>
+          <InnerRacePage />
+        </UserProvider>
+      </TrackProvider>
     </ChampionshipProvider>
   );
 };

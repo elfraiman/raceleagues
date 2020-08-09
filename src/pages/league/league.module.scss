@@ -3,6 +3,7 @@
     background-color: white;
     .tab {
       color: black;
+      outline:none;
       font-weight: 700;
     }
   }
@@ -115,6 +116,7 @@
   display: grid;
   padding: 36px 200px 36px 200px;
   grid-template: auto / 1fr 1fr 1fr;
+  grid-gap: 16px;
   min-height: 70vh;
 
   .driverCard {

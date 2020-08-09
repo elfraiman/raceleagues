@@ -43,7 +43,7 @@ const ChampionshipProvider = ({ children }) => {
 
     championshipRef
       .update({
-        drivers: [...event.drivers, driver],
+        drivers: [...event.drivers, driver.uid],
       })
       .then(function() {
         alert.success("You have successfuly signed up!");
