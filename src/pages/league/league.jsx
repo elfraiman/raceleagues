@@ -93,8 +93,8 @@ const InnerLeaguePage = () => {
       alert.error("No available slots!");
       return;
     }
-    const event = leagueData;
 
+    const event = leagueData;
     championshipProvider.updateChampionshipDrivers(user, event);
   };
 
