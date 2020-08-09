@@ -18,7 +18,6 @@ import UserProvider, { UserContext } from "../../providers/userProvider";
 import classes from "./homepage.module.scss";
 
 const InnerHomePage = () => {
-  const fadeIn = useSpring({ opacity: 1, from: { opacity: 0 } });
   const history = useHistory();
   const championshipProvider = useContext(ChampionshipContext);
   const userProvider = useContext(UserContext);
@@ -62,7 +61,7 @@ const InnerHomePage = () => {
 
   return (
     <div className={classes.main}>
-      <animated.div style={fadeIn} className={classes.header}>
+      <div  className={classes.header}>
         <img src={gt3topview} alt="formula-e" />
 
         <div className={classes.rightDiv}>
@@ -75,7 +74,7 @@ const InnerHomePage = () => {
             <Button onClick={() => joinWithFB()}>JOIN NOW</Button>
           ) : null}
         </div>
-      </animated.div>
+      </div>
 
       <h2 className={classes.activeOrUpcoming}>Upcoming events</h2>
 
