@@ -26,13 +26,7 @@ const InnerRacePage = () => {
   const { race } = useParams();
   const alert = useAlert();
   const raceData = championshipProvider.fetchChampionship(race);
-
-  useEffect(() => {
-    if (!isEmpty(raceData)) {
-      const track = trackProvider.fetchTrack(raceData.track);
-      setTrack(track);
-    }
-  }, [championshipProvider]);
+  const [registeredDrivers, setRegisteredDrivers] = useState([]);
 
   const joinRace = async () => {
     const user = await userProvider.user;
@@ -57,7 +51,29 @@ const InnerRacePage = () => {
     const event = raceData;
     championshipProvider.updateChampionshipDrivers(user, event);
   };
- 
+
+  const generatedRegisteredDrivers = async () => {
+    const drivers = raceData.drivers;
+    const registeredDriversDocuments = [];
+
+  for (let i = 0; i < drivers.length; i++) {
+      await userProvider.fetchUsersDocument(drivers[i]).then((userDoc) => {
+        registeredDriversDocuments.push(userDoc);
+      });
+    }
+
+    setRegisteredDrivers(registeredDriversDocuments);
+  };
+
+  useEffect(() => {
+    if (!isEmpty(raceData)) {
+      const track = trackProvider.fetchTrack(raceData.track);
+      setTrack(track);
+
+      generatedRegisteredDrivers();
+    }
+  }, [championshipProvider, userProvider.fetchUsersDocument]);
+
   return (
     <div>
       {raceData && trackData ? (
@@ -137,17 +153,19 @@ const InnerRacePage = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                   <div className={classes.driversWrapper}>
-                    {raceData.drivers.map((driver) => (
-                      <div key={driver.name} className={classes.driverName}>
-                        <img
-                          src={driver.img}
-                          alt="driver"
-                          className={classes.driverImg}
-                        />
-                        {driver.name}
-                        <Divider className={classes.divider} />
-                      </div>
-                    ))}
+                    {!isEmpty(registeredDrivers)
+                      ? registeredDrivers.map((driver, i) => (
+                          <div key={i} className={classes.driverName}>
+                            <img
+                              src={driver.img}
+                              alt="driver"
+                              className={classes.driverImg}
+                            />
+                            {driver.name}
+                            <Divider className={classes.divider} />
+                          </div>
+                        ))
+                      : null}
                   </div>
                 </AccordionDetails>
               </Accordion>

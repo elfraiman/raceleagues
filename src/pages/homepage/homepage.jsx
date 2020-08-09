@@ -24,7 +24,7 @@ const InnerHomePage = () => {
   const userProvider = useContext(UserContext);
   const [activeEvents, setActiveEvents] = useState([]);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
-  console.log("homepage");
+
 
   useEffect(() => {
     const races = championshipProvider.championships;

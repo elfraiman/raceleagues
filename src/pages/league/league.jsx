@@ -23,7 +23,9 @@ import {
   CardTitle,
   CardHeader,
 } from "shards-react";
-import ChampionshipProvider, { ChampionshipContext } from "../../providers/championshipProvider";
+import ChampionshipProvider, {
+  ChampionshipContext,
+} from "../../providers/championshipProvider";
 import UserProvider, { UserContext } from "../../providers/userProvider";
 import classes from "./league.module.scss";
 import CalendarIcon from "@material-ui/icons/CalendarToday";
@@ -65,6 +67,7 @@ const InnerLeaguePage = () => {
   const alert = useAlert();
   const [tabValue, setTabValue] = React.useState("one");
   const [eventData, setEventData] = useState(null);
+  const [registeredDrivers, setRegisteredDrivers] = useState([]);
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -73,9 +76,9 @@ const InnerLeaguePage = () => {
   const joinRace = async () => {
     const user = await userProvider.user;
     const championship = championshipProvider.fetchChampionship(leagueData.id);
-  
+
     const driverAlreadyRegistered = !isEmpty(championship.drivers)
-      ? championship.drivers.filter((driver) => driver.uid === user.uid)
+      ? championship.drivers.filter((driver) => driver === user.uid)
       : false;
 
     const noAvailableSlots =
@@ -91,7 +94,8 @@ const InnerLeaguePage = () => {
       return;
     }
     const event = leagueData;
-    championshipProvider.updateChampionshipDrivers(user, event)
+
+    championshipProvider.updateChampionshipDrivers(user, event);
   };
 
   const generateEventData = async () => {
@@ -112,11 +116,26 @@ const InnerLeaguePage = () => {
     setEventData(eventData);
   };
 
+  const generatedRegisteredDrivers = async () => {
+    const drivers = leagueData.drivers;
+    const registeredDriversDocuments = [];
+
+    for (let i = 0; i < drivers.length; i++) {
+      await userProvider.fetchUsersDocument(drivers[i]).then((userDoc) => {
+        registeredDriversDocuments.push(userDoc);
+      });
+    }
+
+    setRegisteredDrivers(registeredDriversDocuments);
+  };
+
   useEffect(() => {
     if (!isEmpty(leagueData)) {
       generateEventData();
+      generatedRegisteredDrivers();
     }
-  }, [leagueData]);
+
+  }, [leagueData, userProvider.fetchUsersDocument]);
 
   return (
     <React.Fragment>
@@ -208,12 +227,9 @@ const InnerLeaguePage = () => {
                     </AccordionSummary>
                     <AccordionDetails>
                       <div className={classes.driversWrapper}>
-                        {!isEmpty(leagueData.drivers)
-                          ? leagueData.drivers.map((driver, i) => (
-                              <div
-                                key={i}
-                                className={classes.driverName}
-                              >
+                        {!isEmpty(registeredDrivers)
+                          ? registeredDrivers.map((driver, i) => (
+                              <div key={i} className={classes.driverName}>
                                 <img
                                   src={driver.img}
                                   alt="driver"
@@ -288,9 +304,9 @@ const InnerLeaguePage = () => {
 
           <TabPanel value={tabValue} index="three" className={classes.tabPanel}>
             <div className={classes.driversMain}>
-              {!isEmpty(leagueData) ? (
+              {!isEmpty(registeredDrivers) ? (
                 <React.Fragment>
-                  {leagueData.drivers.map((driver, i) => (
+                  {registeredDrivers.map((driver, i) => (
                     <Card className={classes.driverCard} key={i}>
                       <span className={classes.row}>
                         <img src={driver.img} alt="driver" />

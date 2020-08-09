@@ -107,6 +107,40 @@ const UserProvider = ({ children }) => {
 
   const emptyFunc = () => {};
 
+  const fetchUsersDocuments = () => {
+    const usersDocuments = [];
+
+    database
+      .collection("users")
+      .get()
+      .then((users) => {
+        users.forEach((user) => {
+          usersDocuments.push(user.data());
+        });
+      });
+
+    return usersDocuments;
+  };
+
+  const fetchUsersDocument = async (userUID) => {
+    let usersDocument;
+    const usersRef = database
+      .collection("users");
+    
+    const userData = await usersRef.where("uid", "==", userUID).get();
+
+    if (userData.empty) {
+      console.log('cannot find users data');
+    }
+
+    userData.forEach( document => {
+      const docData = document.data();
+      usersDocument =  docData;
+    })
+
+    return usersDocument;
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -114,6 +148,8 @@ const UserProvider = ({ children }) => {
         logout: logout,
         loginWithFb: loginWithFb,
         discordModal: triggerDiscordModel,
+        fetchUsersDocuments: fetchUsersDocuments,
+        fetchUsersDocument: fetchUsersDocument,
       }}
     >
       <div>
