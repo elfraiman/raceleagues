@@ -10,16 +10,20 @@ import ReactHtmlParser from "react-html-parser";
 import { useParams } from "react-router-dom";
 import { Button, Card, CardBody } from "shards-react";
 import firebase from "../../firebase.js";
-import ChampionshipProvider, { ChampionshipContext } from "../../providers/championshipProvider";
+import ChampionshipProvider, {
+  ChampionshipContext,
+} from "../../providers/championshipProvider";
 import UserProvider, { UserContext } from "../../providers/userProvider";
 import classes from "./singleRace.module.scss";
 import { useAlert } from "react-alert";
 import { Divider } from "@material-ui/core";
+import TrackProvider, { TrackContext } from "../../providers/trackProvider.jsx";
 
 const database = firebase.firestore();
 
 const InnerRacePage = () => {
   const championshipProvider = useContext(ChampionshipContext);
+  const trackProvider = useContext(TrackContext);
   const userProvider = useContext(UserContext);
   const [trackData, setTrack] = useState("");
   const { race } = useParams();
@@ -28,13 +32,8 @@ const InnerRacePage = () => {
 
   useEffect(() => {
     if (!isEmpty(raceData)) {
-      database
-        .collection("tracks")
-        .doc(raceData.track)
-        .get()
-        .then((response) => {
-          setTrack(response.data());
-        });
+      const track = trackProvider.fetchTrack(raceData.track);
+      setTrack(track);
     }
   }, [championshipProvider]);
 
@@ -65,10 +64,7 @@ const InnerRacePage = () => {
 
     championshipRef
       .update({
-        drivers: [
-          ...championshipData.drivers,
-         user
-        ],
+        drivers: [...championshipData.drivers, user],
       })
       .then(function() {
         alert.success("You have successfuly signed up!");
@@ -77,7 +73,7 @@ const InnerRacePage = () => {
         console.error("Error updating document: ", error);
       });
   };
-  console.log('test')
+ 
   return (
     <div>
       {raceData && trackData ? (
@@ -207,9 +203,11 @@ const InnerRacePage = () => {
 const RacePage = () => {
   return (
     <ChampionshipProvider>
-      <UserProvider>
-        <InnerRacePage />
-      </UserProvider>
+      <TrackProvider>
+        <UserProvider>
+          <InnerRacePage />
+        </UserProvider>
+      </TrackProvider>
     </ChampionshipProvider>
   );
 };
