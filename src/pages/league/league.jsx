@@ -72,13 +72,14 @@ const InnerLeaguePage = () => {
 
   const joinRace = async () => {
     const user = await userProvider.user;
-
-    const driverAlreadyRegistered = !isEmpty(championshipProvider.drivers)
-      ? championshipProvider.drivers.filter((driver) => driver.uid === user.uid)
+    const championship = championshipProvider.fetchChampionship(leagueData.id);
+  
+    const driverAlreadyRegistered = !isEmpty(championship.drivers)
+      ? championship.drivers.filter((driver) => driver.uid === user.uid)
       : false;
 
     const noAvailableSlots =
-      championshipProvider.drivers.length === championshipProvider.availability;
+      championship.drivers.length === championship.availability;
 
     if (!isEmpty(driverAlreadyRegistered)) {
       alert.success("You are already registered for this event!");
@@ -208,9 +209,9 @@ const InnerLeaguePage = () => {
                     <AccordionDetails>
                       <div className={classes.driversWrapper}>
                         {!isEmpty(leagueData.drivers)
-                          ? leagueData.drivers.map((driver) => (
+                          ? leagueData.drivers.map((driver, i) => (
                               <div
-                                key={driver.name}
+                                key={i}
                                 className={classes.driverName}
                               >
                                 <img

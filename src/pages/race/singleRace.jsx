@@ -9,7 +9,6 @@ import React, { useContext, useEffect, useState } from "react";
 import ReactHtmlParser from "react-html-parser";
 import { useParams } from "react-router-dom";
 import { Button, Card, CardBody } from "shards-react";
-import firebase from "../../firebase.js";
 import ChampionshipProvider, {
   ChampionshipContext,
 } from "../../providers/championshipProvider";
@@ -18,8 +17,6 @@ import classes from "./singleRace.module.scss";
 import { useAlert } from "react-alert";
 import { Divider } from "@material-ui/core";
 import TrackProvider, { TrackContext } from "../../providers/trackProvider.jsx";
-
-const database = firebase.firestore();
 
 const InnerRacePage = () => {
   const championshipProvider = useContext(ChampionshipContext);
@@ -39,18 +36,14 @@ const InnerRacePage = () => {
 
   const joinRace = async () => {
     const user = await userProvider.user;
-    const championshipRef = database
-      .collection("championships")
-      .doc(raceData.name);
+    const championship = championshipProvider.fetchChampionship(raceData.id);
 
-    const championshipData = (await championshipRef.get()).data();
-
-    const driverAlreadyRegistered = championshipData.drivers.filter(
-      (driver) => driver.uid === user.uid
-    );
+    const driverAlreadyRegistered = !isEmpty(championship.drivers)
+      ? championship.drivers.filter((driver) => driver.uid === user.uid)
+      : false;
 
     const noAvailableSlots =
-      championshipData.drivers.length === championshipData.availability;
+      championship.drivers.length === championship.availability;
 
     if (!isEmpty(driverAlreadyRegistered)) {
       alert.success("You are already registered for this event!");
@@ -61,17 +54,8 @@ const InnerRacePage = () => {
       alert.error("No available slots!");
       return;
     }
-
-    championshipRef
-      .update({
-        drivers: [...championshipData.drivers, user],
-      })
-      .then(function() {
-        alert.success("You have successfuly signed up!");
-      })
-      .catch(function(error) {
-        console.error("Error updating document: ", error);
-      });
+    const event = raceData;
+    championshipProvider.updateChampionshipDrivers(user, event);
   };
  
   return (
