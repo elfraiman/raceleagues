@@ -99,7 +99,11 @@ const InnerTopNavBar = () => {
               {userProvider.user.name}
             </div>
           </DropdownToggle>
+
           <DropdownMenu>
+            <DropdownItem onClick={() => userProvider.triggerDiscordModal()}>
+              Change DiscordID
+            </DropdownItem>
             <DropdownItem onClick={logout}>Logout</DropdownItem>
           </DropdownMenu>
         </Dropdown>

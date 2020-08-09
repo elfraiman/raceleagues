@@ -5,7 +5,7 @@
     padding: 26px;
     grid-column-gap: 26px;
     justify-items: center;
-
+ padding: 36px 200px 36px 200px;
     .title {
       grid-column: 1/4;
       grid-row: 1/2;
@@ -113,7 +113,8 @@
     grid-template: auto / 1fr;
     grid-row-gap: 16px;
     width: 100%;
-  
+    padding: 16px;
+    
     .title {
       grid-row: 1/2 !important;
       grid-column: 1/2 !important;

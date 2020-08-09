@@ -147,7 +147,7 @@ const UserProvider = ({ children }) => {
         user: user,
         logout: logout,
         loginWithFb: loginWithFb,
-        discordModal: triggerDiscordModel,
+        triggerDiscordModal: triggerDiscordModel,
         fetchUsersDocuments: fetchUsersDocuments,
         fetchUsersDocument: fetchUsersDocument,
       }}

@@ -142,7 +142,7 @@ const InnerLeaguePage = () => {
       {!isEmpty(leagueData) ? (
         <div className={classes.tabs}>
           <AppBar position="static" className={classes.tabsAppBar}>
-            <Tabs value={tabValue} onChange={handleTabChange}>
+            <Tabs value={tabValue} onChange={handleTabChange} centered>
               <Tab value="one" label="Info" className={classes.tab} />
               <Tab value="two" label="Races" className={classes.tab} />
               <Tab value="three" label="Drivers" className={classes.tab} />
