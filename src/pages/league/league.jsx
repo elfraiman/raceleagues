@@ -23,15 +23,12 @@ import {
   CardTitle,
   CardHeader,
 } from "shards-react";
-import RaceProvider, { RaceContext } from "../../providers/raceProvider";
+import ChampionshipProvider, { ChampionshipContext } from "../../providers/championshipProvider";
 import UserProvider, { UserContext } from "../../providers/userProvider";
 import classes from "./league.module.scss";
-import firebase from "../../firebase.js";
-
 import CalendarIcon from "@material-ui/icons/CalendarToday";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
-
-const database = firebase.firestore();
+import TrackProvider, { TrackContext } from "../../providers/trackProvider";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -61,9 +58,10 @@ TabPanel.propTypes = {
 
 const InnerLeaguePage = () => {
   const userProvider = useContext(UserContext);
-  const raceProvider = useContext(RaceContext);
+  const championshipProvider = useContext(ChampionshipContext);
+  const trackProvider = useContext(TrackContext);
   const { league } = useParams();
-  const leagueData = raceProvider.fetchRace(league);
+  const leagueData = championshipProvider.fetchChampionship(league);
   const alert = useAlert();
   const [tabValue, setTabValue] = React.useState("one");
   const [eventData, setEventData] = useState(null);
@@ -75,18 +73,12 @@ const InnerLeaguePage = () => {
   const joinRace = async () => {
     const user = await userProvider.user;
 
-    const championshipRef = database
-      .collection("championships")
-      .doc(leagueData.name);
-
-    const championshipData = (await championshipRef.get()).data();
-
-    const driverAlreadyRegistered = !isEmpty(championshipData.drivers)
-      ? championshipData.drivers.filter((driver) => driver.uid === user.uid)
+    const driverAlreadyRegistered = !isEmpty(championshipProvider.drivers)
+      ? championshipProvider.drivers.filter((driver) => driver.uid === user.uid)
       : false;
 
     const noAvailableSlots =
-      championshipData.drivers.length === championshipData.availability;
+      championshipProvider.drivers.length === championshipProvider.availability;
 
     if (!isEmpty(driverAlreadyRegistered)) {
       alert.success("You are already registered for this event!");
@@ -97,44 +89,25 @@ const InnerLeaguePage = () => {
       alert.error("No available slots!");
       return;
     }
-
-    championshipRef
-      .update({
-        drivers: [...championshipData.drivers, user],
-      })
-      .then(function() {
-        alert.success("You have successfuly signed up!");
-      })
-      .catch(function(error) {
-        console.error("Error updating document: ", error);
-      });
+    const event = leagueData;
+    championshipProvider.updateChampionshipDrivers(user, event)
   };
 
   const generateEventData = async () => {
-    const tracks = [];
     const races = leagueData.races;
     const eventData = [];
 
-    await database
-      .collection("tracks")
-      .get()
-      .then((response) => {
-        response.docs.forEach((track) => {
-          tracks.push(track.data());
-        });
-      });
-
     races.forEach((race) => {
-      const correctTrack = tracks.filter((track) => track.id === race.track);
+      const correctTrack = trackProvider.fetchTrack(race.track);
+
       const obj = {
-        track: correctTrack[0],
+        track: correctTrack,
         race: race,
       };
 
       eventData.push(obj);
     });
 
-    console.log(eventData, " event data");
     setEventData(eventData);
   };
 
@@ -165,9 +138,10 @@ const InnerLeaguePage = () => {
                     {" "}
                     {isString(leagueData.races[0].raceDate)
                       ? leagueData.races[0].raceDate
-                      : moment(leagueData.races[0].raceDate.toDate(), "en").format(
-                          "LLLL, UTCZZ"
-                        )}
+                      : moment(
+                          leagueData.races[0].raceDate.toDate(),
+                          "en"
+                        ).format("LLLL, UTCZZ")}
                   </h6>
                 </div>
 
@@ -188,9 +162,10 @@ const InnerLeaguePage = () => {
                       <b>
                         {isString(leagueData.races[0].raceDate)
                           ? leagueData.races[0].raceDate
-                          : moment(leagueData.races[0].raceDate.toDate(), "en").format(
-                              "LLLL, UTCZZ"
-                            )}
+                          : moment(
+                              leagueData.races[0].raceDate.toDate(),
+                              "en"
+                            ).format("LLLL, UTCZZ")}
                       </b>
                     </p>
                     <Divider />
@@ -339,11 +314,13 @@ const InnerLeaguePage = () => {
 
 const LeaguePage = () => {
   return (
-    <RaceProvider>
-      <UserProvider>
-        <InnerLeaguePage />
-      </UserProvider>
-    </RaceProvider>
+    <ChampionshipProvider>
+      <TrackProvider>
+        <UserProvider>
+          <InnerLeaguePage />
+        </UserProvider>
+      </TrackProvider>
+    </ChampionshipProvider>
   );
 };
 

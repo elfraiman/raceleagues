@@ -10,7 +10,7 @@ import ReactHtmlParser from "react-html-parser";
 import { useParams } from "react-router-dom";
 import { Button, Card, CardBody } from "shards-react";
 import firebase from "../../firebase.js";
-import RaceProvider, { RaceContext } from "../../providers/raceProvider";
+import ChampionshipProvider, { ChampionshipContext } from "../../providers/championshipProvider";
 import UserProvider, { UserContext } from "../../providers/userProvider";
 import classes from "./singleRace.module.scss";
 import { useAlert } from "react-alert";
@@ -19,12 +19,12 @@ import { Divider } from "@material-ui/core";
 const database = firebase.firestore();
 
 const InnerRacePage = () => {
-  const raceProvider = useContext(RaceContext);
+  const championshipProvider = useContext(ChampionshipContext);
   const userProvider = useContext(UserContext);
   const [trackData, setTrack] = useState("");
   const { race } = useParams();
   const alert = useAlert();
-  const raceData = raceProvider.fetchRace(race);
+  const raceData = championshipProvider.fetchChampionship(race);
 
   useEffect(() => {
     if (!isEmpty(raceData)) {
@@ -36,7 +36,7 @@ const InnerRacePage = () => {
           setTrack(response.data());
         });
     }
-  }, [raceProvider]);
+  }, [championshipProvider]);
 
   const joinRace = async () => {
     const user = await userProvider.user;
@@ -206,11 +206,11 @@ const InnerRacePage = () => {
 
 const RacePage = () => {
   return (
-    <RaceProvider>
+    <ChampionshipProvider>
       <UserProvider>
         <InnerRacePage />
       </UserProvider>
-    </RaceProvider>
+    </ChampionshipProvider>
   );
 };
 

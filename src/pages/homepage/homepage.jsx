@@ -13,21 +13,21 @@ import gt3topview from "../../assets/images/mercgt3top.jpg";
 import spa3mixed from "../../assets/images/spa3hoursmixed.jpg";
 import spoolracingbmw from "../../assets/images/spoolracingbmw.png";
 import LeagueCard from "../../components/league-card/leagueCard";
-import RaceProvider, { RaceContext } from "../../providers/raceProvider";
+import ChampionshipProvider, { ChampionshipContext } from "../../providers/championshipProvider";
 import UserProvider, { UserContext } from "../../providers/userProvider";
 import classes from "./homepage.module.scss";
 
 const InnerHomePage = () => {
   const fadeIn = useSpring({ opacity: 1, from: { opacity: 0 } });
   const history = useHistory();
-  const raceProvider = useContext(RaceContext);
+  const championshipProvider = useContext(ChampionshipContext);
   const userProvider = useContext(UserContext);
   const [activeEvents, setActiveEvents] = useState([]);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   console.log("homepage");
 
   useEffect(() => {
-    const races = raceProvider.races;
+    const races = championshipProvider.championships;
     const upcomingArray = [];
     const activeArray = [];
     if (!isEmpty(races)) {
@@ -46,7 +46,7 @@ const InnerHomePage = () => {
 
     setActiveEvents(activeArray);
     setUpcomingEvents(upcomingArray);
-  }, [raceProvider]);
+  }, [championshipProvider]);
 
   const navigateToRaceOrLeague = (raceOrLeague, eventName) => {
     if (raceOrLeague === "endurance") {
@@ -79,7 +79,7 @@ const InnerHomePage = () => {
 
       <h2 className={classes.activeOrUpcoming}>Upcoming events</h2>
 
-      {!isEmpty(raceProvider.races) ? (
+      {!isEmpty(championshipProvider.championships) ? (
         <React.Fragment>
           <VisibilitySensor partialVisibility>
             {({ isVisible }) => (
@@ -143,9 +143,10 @@ const InnerHomePage = () => {
                       >
                         <LeagueCard
                           header={race.title.toUpperCase()}
-                          date={moment(race.races[0].raceDate.toDate(), "en").format(
-                            "LLLL, UTCZZ"
-                          )}
+                          date={moment(
+                            race.races[0].raceDate.toDate(),
+                            "en"
+                          ).format("LLLL, UTCZZ")}
                           type={race.type.toUpperCase()}
                           carClass={race.carClass.toUpperCase()}
                           image={race.img}
@@ -269,11 +270,11 @@ const InnerHomePage = () => {
 
 const HomePage = () => {
   return (
-    <RaceProvider>
+    <ChampionshipProvider>
       <UserProvider>
         <InnerHomePage />
       </UserProvider>
-    </RaceProvider>
+    </ChampionshipProvider>
   );
 };
 
