@@ -36,14 +36,14 @@ const ChampionshipProvider = ({ children }) => {
     }
   };
 
-  const updateChampionshipDrivers = (driver, event) => {
+  const updateChampionshipDrivers = (driverData, event) => {
     const championshipRef = database
       .collection("championships")
       .doc(event.name);
 
     championshipRef
       .update({
-        drivers: [...event.drivers, driver.uid],
+        drivers: [...event.drivers, driverData],
       })
       .then(function() {
         alert.success("You have successfuly signed up!");
