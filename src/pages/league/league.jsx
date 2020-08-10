@@ -222,24 +222,30 @@ const InnerLeaguePage = () => {
                   <Accordion className={classes.accordion}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                       <h6 className={classes.heading}>
-                        Registered Racers ({leagueData.drivers.length})
+                        Registered Drivers ({leagueData.drivers.length})
                       </h6>
                     </AccordionSummary>
                     <AccordionDetails>
                       <div className={classes.driversWrapper}>
                         {!isEmpty(registeredDrivers)
                           ? registeredDrivers.map((driver, i) => (
-                              <div key={i} className={classes.driverName}>
-                                <img
-                                  src={driver.img}
-                                  alt="driver"
-                                  className={classes.driverImg}
-                                />
+                            <div key={i} className={classes.driver}>
+                              <img
+                                src={driver.img}
+                                alt="driver"
+                                className={classes.driverImg}
+                              />
+                              <span className={classes.driversName}>
                                 {driver.name}
-                                <Divider className={classes.divider} />
-                              </div>
-                            ))
+    
+                                <span className={classes.driverDiscord}>
+                                  {driver.discord}
+                                </span>
+                              </span>
+                            </div>
+                          ))
                           : null}
+                        <Divider className={classes.divider} />
                       </div>
                     </AccordionDetails>
                   </Accordion>

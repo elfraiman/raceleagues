@@ -1,146 +1,171 @@
+.main {
+	display: grid;
+	grid-template: 120px 1fr / 1fr 1fr;
+	padding: 26px;
+	grid-column-gap: 26px;
+	justify-items: center;
+	padding: 36px 200px 36px 200px;
 
-  .main {
-    display: grid;
-    grid-template: 120px 1fr / 1fr 1fr;
-    padding: 26px;
-    grid-column-gap: 26px;
-    justify-items: center;
- padding: 36px 200px 36px 200px;
-    .title {
-      grid-column: 1/4;
-      grid-row: 1/2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+	.title {
+		grid-column: 1/4;
+		grid-row: 1/2;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 
-      h2 {
-        font-size: 55px;
-        font-weight: 700;
-        text-align: center;
-        color: black;
-        text-transform: uppercase;
-        margin: 0;
-      }
-      img {
-        width: 65px;
-        height: 50px;
-        margin-right: 16px;
-      }
-    }
+		h2 {
+			font-size: 55px;
+			font-weight: 700;
+			text-align: center;
+			color: black;
+			text-transform: uppercase;
+			margin: 0;
+		}
 
-    .raceInfo {
-      grid-column: 1/2;
-      grid-row: 2/3;
+		img {
+			width: 65px;
+			height: 50px;
+			margin-right: 16px;
+		}
+	}
 
-      img {
-        width: 100%;
-        min-width: 400px;
-        border-radius: 4px;
-      }
+	.raceInfo {
+		grid-column: 1/2;
+		grid-row: 2/3;
 
-      .infoCard {
-        margin-top: 16px;
+		img {
+			width: 100%;
+			min-width: 400px;
+			border-radius: 4px;
+		}
 
-        .markdown {
-          color: black;
-          font-weight: 500;
-        }
-      }
-    }
+		.infoCard {
+			margin-top: 16px;
 
-    .trackData {
-      grid-column: 2/4;
-      grid-row: 2/3;
+			.markdown {
+				color: black;
+				font-weight: 500;
+			}
+		}
+	}
 
-      h6 {
-        margin: 0;
-      }
+	.trackData {
+		grid-column: 2/4;
+		grid-row: 2/3;
 
-      h5 {
-        font-weight: 600;
+		h6 {
+			margin: 0;
+		}
 
-        span {
-          color: grey;
-          font-size: 13px;
-        }
-      }
-    }
+		h5 {
+			font-weight: 600;
 
-    .registerButton {
-      grid-column: 2/4;
-      grid-row: 3/5;
-      margin-top: 16px;
-      width: 100%;
-    }
-  }
+			span {
+				color: grey;
+				font-size: 13px;
+			}
+		}
+	}
+
+	.registerButton {
+		grid-column: 2/4;
+		grid-row: 3/5;
+		margin-top: 16px;
+		width: 100%;
+	}
+}
 
 .trackImgCard {
-  margin-bottom: 16px;
+	margin-bottom: 16px;
 }
+
 .trackImg {
-  width: 100%;
-  min-width: 400px;
-  border-radius: 4px;
+	width: 100%;
+	min-width: 400px;
+	border-radius: 4px;
 }
 
 .driversWrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  .driverName {
-    font-weight: 500;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+	.driver {
+		font-weight: 500;
     width: 100%;
+    display: grid;
+    grid-template: 1fr / 50px 1fr 1fr;
+  
     .driverImg {
-      width: 30px;
-      margin-right: 6px;
+      width: 35px;
+      height: 35px;
       border-radius: 4px;
+      grid-row: 1/2;
+      grid-column: 1/2;
+      align-self: center;
     }
 
-    .divider {
-      margin: 6px 0px 6px 0px;
+		.driversName {
+      grid-column: 2/3;
+      grid-row: 1/2;
+      display: flex;
+      flex-direction: column;
+
+      font-weight: 700;
+      .driverDiscord {
+        font-weight: 500;
+        font-size: 12px;
+        color: grey;
+        grid-row: 2/3;
+        grid-column: 2/3;
+      }
     }
+  }
+
+  .divider {
+    margin: 12px 0px 6px 0px;
   }
 }
 
 .accordionCard {
-  margin-top: 16px;
+	margin-top: 16px;
 }
 
 
 
 @media (min-device-width: 205px) and (max-device-width: 1023px) {
-  .main {
-    grid-template: auto / 1fr;
-    grid-row-gap: 16px;
-    width: 100%;
-    padding: 16px;
-    
-    .title {
-      grid-row: 1/2 !important;
-      grid-column: 1/2 !important;
+	.main {
+		grid-template: auto / 1fr;
+		grid-row-gap: 16px;
+		width: 100%;
+		padding: 16px;
 
-      h2 {
-        font-size: 40px;
-        line-height: 45px;
-      }
-    }
+		.title {
+			grid-row: 1/2 !important;
+			grid-column: 1/2 !important;
 
-    .raceInfo {
-      grid-row: 2/3 !important;
-      grid-column: 1/2 !important;
+			h2 {
+				font-size: 40px;
+				line-height: 45px;
+			}
+		}
 
-      img {
-        min-width: 0;
-      }
-    }
+		.raceInfo {
+			grid-row: 2/3 !important;
+			grid-column: 1/2 !important;
 
-    .trackData {
-      grid-row: 3/4 !important;
-      grid-column: 1/2 !important;
-    }
-  }
+			img {
+				min-width: 0;
+			}
+		}
 
-  .trackImg {
-    min-width: 0;
-  }
+		.trackData {
+			grid-row: 3/4 !important;
+			grid-column: 1/2 !important;
+		}
+	}
+
+	.trackImg {
+		min-width: 0;
+	}
 }
