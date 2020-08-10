@@ -49,7 +49,11 @@ const InnerRacePage = () => {
       return;
     }
     const event = raceData;
-    championshipProvider.updateChampionshipDrivers(user, event);
+    const driverData = {
+      uid: user.uid,
+      car: "test"
+    }
+    championshipProvider.updateChampionshipDrivers(driverData, event);
   };
 
   const generatedRegisteredDrivers = async () => {
@@ -57,7 +61,7 @@ const InnerRacePage = () => {
     const registeredDriversDocuments = [];
 
     for (let i = 0; i < drivers.length; i++) {
-      await userProvider.fetchUsersDocument(drivers[i]).then((userDoc) => {
+      await userProvider.fetchUsersDocument(drivers[i].uid).then((userDoc) => {
         registeredDriversDocuments.push(userDoc);
       });
     }
