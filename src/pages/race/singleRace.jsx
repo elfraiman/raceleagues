@@ -58,15 +58,19 @@ const InnerRacePage = () => {
 
   const generatedRegisteredDrivers = async () => {
     const drivers = raceData.drivers;
-    const registeredDriversDocuments = [];
+    if (!isEmpty(drivers)) {
+       const registeredDriversDocuments = [];
 
-    for (let i = 0; i < drivers.length; i++) {
-      await userProvider.fetchUsersDocument(drivers[i].uid).then((userDoc) => {
-        registeredDriversDocuments.push(userDoc);
-      });
+       for (let i = 0; i < drivers.length; i++) {
+         await userProvider
+           .fetchUsersDocument(drivers[i].uid)
+           .then((userDoc) => {
+             registeredDriversDocuments.push(userDoc);
+           });
+       }
+
+       setRegisteredDrivers(registeredDriversDocuments);
     }
-
-    setRegisteredDrivers(registeredDriversDocuments);
   };
 
   useEffect(() => {
