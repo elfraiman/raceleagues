@@ -21,7 +21,10 @@ const FuelCalculator = ({triggerFuelCalculatorModal, fuelCalculatorModalState}) 
   };
 
   const calculate = () => {
-    const totalLaps = (raceLength * 60) / (avgLapTime * 60);
+    const avgLapTimeArray = avgLapTime.split('.');
+    const avgTime = (parseInt(avgLapTimeArray[0] * 60)) + parseInt(avgLapTimeArray[1]);
+    const raceLengthInSeconds = (raceLength * 60);
+    const totalLaps = raceLengthInSeconds / avgTime;
     const totalFuelResult = Math.ceil((totalLaps + 1) * avgFuel);
     setTotalFuelResult(totalFuelResult);
   }
@@ -39,15 +42,18 @@ const FuelCalculator = ({triggerFuelCalculatorModal, fuelCalculatorModalState}) 
         <FormInput
           className={classes.formInput}
           placeholder="Race Length in minutes (e.g 120)"
+          type="number"
           onChange={handleRaceLength}
         />
         <FormInput
           className={classes.formInput}
+          type="number"
           placeholder="Average lap time (e.g 1.49.5)"
           onChange={handleAvgLapTime}
         />
         <FormInput
           className={classes.formInput}
+          type="number"
           placeholder="Fuel per lap (e.g 2.59)"
           onChange={handleAvgFuel}
         />
@@ -55,7 +61,7 @@ const FuelCalculator = ({triggerFuelCalculatorModal, fuelCalculatorModalState}) 
         <Button className={classes.btn} onClick={calculate}>
           Calculate
         </Button>
-        <div className={classes.buttons}></div>
+
       </ModalBody>
     </Modal>
   );

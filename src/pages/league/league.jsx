@@ -97,8 +97,8 @@ const InnerLeaguePage = () => {
     const event = leagueData;
     const driverData = {
       uid: user.uid,
-      car: "test"
-    }
+      car: "test",
+    };
     championshipProvider.updateChampionshipDrivers(driverData, event);
   };
 
@@ -122,15 +122,19 @@ const InnerLeaguePage = () => {
 
   const generatedRegisteredDrivers = async () => {
     const drivers = leagueData.drivers;
-    const registeredDriversDocuments = [];
+    if (!isEmpty(drivers)) {
+      const registeredDriversDocuments = [];
 
-    for (let i = 0; i < drivers.length; i++) {
-      await userProvider.fetchUsersDocument(drivers[i].uid).then((userDoc) => {
-        registeredDriversDocuments.push(userDoc);
-      });
+      for (let i = 0; i < drivers.length; i++) {
+        await userProvider
+          .fetchUsersDocument(drivers[i].uid)
+          .then((userDoc) => {
+            registeredDriversDocuments.push(userDoc);
+          });
+      }
+
+      setRegisteredDrivers(registeredDriversDocuments);
     }
-
-    setRegisteredDrivers(registeredDriversDocuments);
   };
 
   useEffect(() => {
@@ -138,7 +142,6 @@ const InnerLeaguePage = () => {
       generateEventData();
       generatedRegisteredDrivers();
     }
-
   }, [leagueData, userProvider.fetchUsersDocument]);
 
   return (
@@ -233,21 +236,21 @@ const InnerLeaguePage = () => {
                       <div className={classes.driversWrapper}>
                         {!isEmpty(registeredDrivers)
                           ? registeredDrivers.map((driver, i) => (
-                            <div key={i} className={classes.driver}>
-                              <img
-                                src={driver.img}
-                                alt="driver"
-                                className={classes.driverImg}
-                              />
-                              <span className={classes.driversName}>
-                                {driver.name}
-    
-                                <span className={classes.driverDiscord}>
-                                  {driver.discord}
+                              <div key={i} className={classes.driver}>
+                                <img
+                                  src={driver.img}
+                                  alt="driver"
+                                  className={classes.driverImg}
+                                />
+                                <span className={classes.driversName}>
+                                  {driver.name}
+
+                                  <span className={classes.driverDiscord}>
+                                    {driver.discord}
+                                  </span>
                                 </span>
-                              </span>
-                            </div>
-                          ))
+                              </div>
+                            ))
                           : null}
                         <Divider className={classes.divider} />
                       </div>

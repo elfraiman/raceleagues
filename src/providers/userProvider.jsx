@@ -123,22 +123,23 @@ const UserProvider = ({ children }) => {
   };
 
   const fetchUsersDocument = async (userUID) => {
-    let usersDocument;
-    const usersRef = database
-      .collection("users");
-    
-    const userData = await usersRef.where("uid", "==", userUID).get();
+    if (userUID) {
+      let usersDocument;
+      const usersRef = database.collection("users");
 
-    if (userData.empty) {
-      console.log('cannot find users data');
+      const userData = await usersRef.where("uid", "==", userUID).get();
+
+      if (userData.empty) {
+        console.log("cannot find users data");
+      }
+
+      userData.forEach((document) => {
+        const docData = document.data();
+        usersDocument = docData;
+      });
+
+      return usersDocument;
     }
-
-    userData.forEach( document => {
-      const docData = document.data();
-      usersDocument =  docData;
-    })
-
-    return usersDocument;
   };
 
   return (
