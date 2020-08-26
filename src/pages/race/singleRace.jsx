@@ -32,28 +32,33 @@ const InnerRacePage = () => {
     const user = await userProvider.user;
     const championship = championshipProvider.fetchChampionship(raceData.id);
 
-    const driverAlreadyRegistered = !isEmpty(championship.drivers)
-      ? championship.drivers.filter((driver) => driver.uid === user.uid)
-      : false;
+    if (championship) {
+        const driverAlreadyRegistered = !isEmpty(championship.drivers)
+          ? championship.drivers.filter((driver) => driver.uid === user.uid)
+          : false;
 
-    const noAvailableSlots =
-      championship.drivers.length === championship.availability;
+        const noAvailableSlots =
+          championship.drivers.length === championship.availability;
 
-    if (!isEmpty(driverAlreadyRegistered)) {
-      alert.success("You are already registered for this event!");
-      return;
-    }
+        if (!isEmpty(driverAlreadyRegistered)) {
+          alert.success("You are already registered for this event!");
+          return;
+        }
 
-    if (noAvailableSlots) {
-      alert.error("No available slots!");
-      return;
+        if (noAvailableSlots) {
+          alert.error("No available slots!");
+          return;
+        }
+        const event = raceData;
+        const driverData = {
+          uid: user.uid,
+          car: "test",
+        };
+        championshipProvider.updateChampionshipDrivers(driverData, event);
+    } else {
+      console.error('No championship found')
     }
-    const event = raceData;
-    const driverData = {
-      uid: user.uid,
-      car: "test"
-    }
-    championshipProvider.updateChampionshipDrivers(driverData, event);
+  
   };
 
   const generatedRegisteredDrivers = async () => {
