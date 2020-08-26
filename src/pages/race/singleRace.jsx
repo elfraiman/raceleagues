@@ -80,7 +80,7 @@ const InnerRacePage = () => {
 
   useEffect(() => {
     if (!isEmpty(raceData)) {
-      const track = trackProvider.fetchTrack(raceData.track);
+      const track = trackProvider.fetchTrack(raceData.races[0].track);
       setTrack(track);
 
       generatedRegisteredDrivers();
@@ -139,7 +139,7 @@ const InnerRacePage = () => {
                 </h5>
                 <h5>
                   <span>Race length:</span> <br />
-                  {raceData.raceLength / 60} Hours
+                  {raceData.races[0].raceLengthInMinutes / 60} Hours
                 </h5>
                 <h5>
                   <span>Race date:</span> <br />{" "}
