@@ -12,12 +12,21 @@ const firebaseConfig = {
   storageBucket: "spoolracing.appspot.com",
   messagingSenderId: "335755757541",
   appId: "1:335755757541:web:baaa5fd2ab4578429b510c",
-  measurementId: "G-R0WN3TM0QP"
+  measurementId: "G-R0WN3TM0QP",
 };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 firebase.performance();
+firebase.firestore().settings({
+  cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED,
+});
+firebase
+  .firestore()
+  .enablePersistence()
+  .catch(function(err) {
+    console.Error(err);
+  });
 
 export default firebase;
