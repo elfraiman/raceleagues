@@ -18,7 +18,13 @@ const ChampionshipProvider = ({ children }) => {
         const raceArray = [];
 
         response.docs.forEach((document) => {
-          raceArray.push(document.data());
+          // checkes if the enabled boolean on the document is set to true
+          // if false it doesn't push to championships.
+          // this lets me add and create championships without worrying about them poping up in the 
+          // front page.
+          if (document.data().enabled) {
+            raceArray.push(document.data());
+          }
         });
 
         setChampionships(raceArray);
