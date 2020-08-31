@@ -7,9 +7,7 @@ import { Spring } from "react-spring/renderprops";
 import VisibilitySensor from "react-visibility-sensor";
 import { Button } from "shards-react";
 
-import paulricard3gt3 from "../../assets/images/3hourspaulricard.jpg";
 import gt3topview from "../../assets/images/mercgt3top.jpg";
-import spa3mixed from "../../assets/images/spa3hoursmixed.jpg";
 import spoolracingbmw from "../../assets/images/spoolracingbmw.png";
 import LeagueCard from "../../components/league-card/leagueCard";
 import ChampionshipProvider, {
@@ -77,49 +75,58 @@ const InnerHomePage = () => {
           ) : null}
         </div>
       </div>
-      <h2 className={classes.activeOrUpcoming}>Upcoming events</h2>
-      {!isEmpty(championshipProvider.championships) ? (
-        <VisibilitySensor partialVisibility>
-          {({ isVisible }) => (
-            <Spring
-              delay={300}
-              to={{
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible ? "translateY(0)" : "translateY(200px)",
-              }}
-            >
-              {(props) => (
-                <div className={classes.leagues} style={{ ...props }}>
-                  {upcomingEvents.map((race, i) => (
-                    <div
-                      className={classes.leagueCard}
-                      key={i}
-                      onClick={() =>
-                        navigateToRaceOrLeague(race.type, race.name)
-                      }
-                    >
-                      <LeagueCard
-                        header={race.title.toUpperCase()}
-                        date={moment(
-                          race.races[0].raceDate.toDate(),
-                          "en"
-                        ).format("LLLL, UTCZZ")}
-                        type={race.type.toUpperCase()}
-                        carClass={race.carClass.toUpperCase()}
-                        image={race.img}
-                        button="More info"
-                        footer={race.level.toUpperCase()}
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </Spring>
-          )}
-        </VisibilitySensor>
-      ) : (
-        <LinearProgress />
-      )}
+
+      <React.Fragment>
+        {!isEmpty(upcomingEvents) ? (
+          <React.Fragment>
+            <h2 className={classes.activeOrUpcoming}>Upcoming events</h2>
+            {!isEmpty(championshipProvider.championships) ? (
+              <VisibilitySensor partialVisibility>
+                {({ isVisible }) => (
+                  <Spring
+                    delay={300}
+                    to={{
+                      opacity: isVisible ? 1 : 0,
+                      transform: isVisible
+                        ? "translateY(0)"
+                        : "translateY(200px)",
+                    }}
+                  >
+                    {(props) => (
+                      <div className={classes.leagues} style={{ ...props }}>
+                        {upcomingEvents.map((race, i) => (
+                          <div
+                            className={classes.leagueCard}
+                            key={i}
+                            onClick={() =>
+                              navigateToRaceOrLeague(race.type, race.name)
+                            }
+                          >
+                            <LeagueCard
+                              header={race.title.toUpperCase()}
+                              date={moment(
+                                race.races[0].raceDate.toDate(),
+                                "en"
+                              ).format("LLLL, UTCZZ")}
+                              type={race.type.toUpperCase()}
+                              carClass={race.carClass.toUpperCase()}
+                              image={race.img}
+                              button="More info"
+                              footer={race.level.toUpperCase()}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </Spring>
+                )}
+              </VisibilitySensor>
+            ) : (
+              <LinearProgress />
+            )}
+          </React.Fragment>
+        ) : null}
+      </React.Fragment>
 
       <React.Fragment>
         {!isEmpty(activeEvents) ? (
@@ -209,58 +216,6 @@ const InnerHomePage = () => {
                 {(props) => (
                   <div style={{ ...props }} className={classes.racesTopRight}>
                     <img src={spoolracingbmw} alt="spoolracing bmw" />
-                  </div>
-                )}
-              </Spring>
-            )}
-          </VisibilitySensor>
-
-          <VisibilitySensor partialVisibility>
-            {({ isVisible }) => (
-              <Spring
-                delay={300}
-                to={{
-                  opacity: isVisible ? 1 : 0,
-                  transform: isVisible
-                    ? "translateY(0px)"
-                    : "translateY(200px)",
-                }}
-              >
-                {(props) => (
-                  <div
-                    style={{ ...props }}
-                    className={classes.racesBottomLeft}
-                    onClick={() =>
-                      navigateToRaceOrLeague("endurance", "3hoursofpaulricard")
-                    }
-                  >
-                    <img src={paulricard3gt3} alt="paulricard3hours" />
-                  </div>
-                )}
-              </Spring>
-            )}
-          </VisibilitySensor>
-
-          <VisibilitySensor partialVisibility>
-            {({ isVisible }) => (
-              <Spring
-                delay={300}
-                to={{
-                  opacity: isVisible ? 1 : 0,
-                  transform: isVisible
-                    ? "translateY(0px)"
-                    : "translateY(200px)",
-                }}
-              >
-                {(props) => (
-                  <div
-                    style={{ ...props }}
-                    className={classes.racesBottomRight}
-                    onClick={() =>
-                      navigateToRaceOrLeague("endurance", "3hoursofspa")
-                    }
-                  >
-                    <img src={spa3mixed} alt="3hoursofspa" />
                   </div>
                 )}
               </Spring>
