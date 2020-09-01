@@ -27,12 +27,15 @@ const InnerRacePage = () => {
   const alert = useAlert();
   const raceData = championshipProvider.fetchChampionship(race);
   const [registeredDrivers, setRegisteredDrivers] = useState([]);
+  const [driverRegistered, setDriverRegistered] = useState(false);
 
   const joinRace = async () => {
     const user = await userProvider.user;
     const championship = championshipProvider.fetchChampionship(raceData.id);
-
-    if (championship) {
+    if (isEmpty(user)) {
+      alert.error("You must be signed in to register!");
+    } else {
+      if (championship) {
         const driverAlreadyRegistered = !isEmpty(championship.drivers)
           ? championship.drivers.filter((driver) => driver.uid === user.uid)
           : false;
@@ -55,31 +58,59 @@ const InnerRacePage = () => {
           car: "test",
         };
         championshipProvider.updateChampionshipDrivers(driverData, event);
-    } else {
-      console.error('No championship found')
+      } else {
+        console.error("No championship found");
+      }
     }
-  
+  };
+
+  const leaveRace = async () => {
+    const user = await userProvider.user;
+    const event = raceData;
+    const driverData = {
+      uid: user.uid,
+      car: "test",
+    };
+
+    championshipProvider.removeChampionshipDriver(driverData, event);
   };
 
   const generatedRegisteredDrivers = async () => {
     const drivers = raceData.drivers;
     if (!isEmpty(drivers)) {
-       const registeredDriversDocuments = [];
+      const registeredDriversDocuments = [];
 
-       for (let i = 0; i < drivers.length; i++) {
-         await userProvider
-           .fetchUsersDocument(drivers[i].uid)
-           .then((userDoc) => {
-             registeredDriversDocuments.push(userDoc);
-           });
-       }
+      for (let i = 0; i < drivers.length; i++) {
+        await userProvider
+          .fetchUsersDocument(drivers[i].uid)
+          .then((userDoc) => {
+            registeredDriversDocuments.push(userDoc);
+          });
+      }
 
-       setRegisteredDrivers(registeredDriversDocuments);
+      setRegisteredDrivers(registeredDriversDocuments);
+    }
+  };
+
+  const checkUserRegistered = async () => {
+    const user = await userProvider.user;
+    console.log(user, "user $$");
+    if (raceData && user) {
+      const championship = championshipProvider.fetchChampionship(raceData.id);
+
+      if (championship) {
+        const driverAlreadyRegistered = !isEmpty(championship.drivers)
+          ? championship.drivers.filter((driver) => driver.uid === user.uid)
+          : false;
+
+        setDriverRegistered(!isEmpty(driverAlreadyRegistered));
+      }
     }
   };
 
   useEffect(() => {
     if (!isEmpty(raceData)) {
+      checkUserRegistered();
       const track = trackProvider.fetchTrack(raceData.races[0].track);
       setTrack(track);
 
@@ -146,8 +177,8 @@ const InnerRacePage = () => {
                   {isString(raceData.races[0].raceDate)
                     ? raceData.races[0].raceDate
                     : moment(raceData.races[0].raceDate.toDate(), "en").format(
-                      "LLLL, UTCZZ"
-                    )}{" "}
+                        "LLLL, UTCZZ"
+                      )}{" "}
                   <a href="https://time.is/UTC+2">Check UTC+2</a>
                 </h5>
                 <h5>
@@ -168,23 +199,22 @@ const InnerRacePage = () => {
                   <div className={classes.driversWrapper}>
                     {!isEmpty(registeredDrivers)
                       ? registeredDrivers.map((driver, i) => (
-                        <div key={i} className={classes.driver}>
-                          <img
-                            src={driver.img}
-                            alt="driver"
-                            className={classes.driverImg}
-                          />
+                          <div key={i} className={classes.driver}>
+                            <img
+                              src={driver.img}
+                              alt="driver"
+                              className={classes.driverImg}
+                            />
 
-                          <span className={classes.driversName}>
-                            {driver.name}
+                            <span className={classes.driversName}>
+                              {driver.name}
 
-                            <span className={classes.driverDiscord}>
-                              {driver.discord}
+                              <span className={classes.driverDiscord}>
+                                {driver.discord}
+                              </span>
                             </span>
-                          </span>
-
-                        </div>
-                      ))
+                          </div>
+                        ))
                       : null}
                     <Divider className={classes.divider} />
                   </div>
@@ -211,14 +241,20 @@ const InnerRacePage = () => {
               </Accordion>
             </Card>
 
-            <Button className={classes.registerButton} onClick={joinRace}>
-              Join Race
-            </Button>
+            {driverRegistered ? (
+              <Button className={classes.registerButton} onClick={leaveRace}>
+                Leave Race
+              </Button>
+            ) : (
+              <Button className={classes.registerButton} onClick={joinRace}>
+                Join Race
+              </Button>
+            )}
           </div>
         </div>
       ) : (
-          <LinearProgress />
-        )}
+        <LinearProgress />
+      )}
     </div>
   );
 };

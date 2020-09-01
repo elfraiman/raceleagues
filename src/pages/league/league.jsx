@@ -68,38 +68,73 @@ const InnerLeaguePage = () => {
   const [tabValue, setTabValue] = React.useState("one");
   const [eventData, setEventData] = useState(null);
   const [registeredDrivers, setRegisteredDrivers] = useState([]);
+  const [driverRegistered, setDriverRegistered] = useState(false);
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
 
+  const checkUserRegistered = async () => {
+    const user = await userProvider.user;
+    if (leagueData && user) {
+      const championship = championshipProvider.fetchChampionship(
+        leagueData.id
+      );
+
+      if (championship) {
+        const driverAlreadyRegistered = !isEmpty(championship.drivers)
+          ? championship.drivers.filter((driver) => driver.uid === user.uid)
+          : false;
+        setDriverRegistered(!isEmpty(driverAlreadyRegistered));
+      }
+    }
+  };
+
   const joinRace = async () => {
     const user = await userProvider.user;
-    const championship = championshipProvider.fetchChampionship(leagueData.id);
+    if (isEmpty(user)) {
+      alert.error("You must be signed in to register!");
+    } else {
+      const championship = championshipProvider.fetchChampionship(
+        leagueData.id
+      );
 
-    const driverAlreadyRegistered = !isEmpty(championship.drivers)
-      ? championship.drivers.filter((driver) => driver === user.uid)
-      : false;
+      const driverAlreadyRegistered = !isEmpty(championship.drivers)
+        ? championship.drivers.filter((driver) => driver === user.uid)
+        : false;
 
-    const noAvailableSlots =
-      championship.drivers.length === championship.availability;
+      const noAvailableSlots =
+        championship.drivers.length === championship.availability;
 
-    if (!isEmpty(driverAlreadyRegistered)) {
-      alert.success("You are already registered for this event!");
-      return;
+      if (!isEmpty(driverAlreadyRegistered)) {
+        alert.success("You are already registered for this event!");
+        return;
+      }
+
+      if (noAvailableSlots) {
+        alert.error("No available slots!");
+        return;
+      }
+
+      const event = leagueData;
+      const driverData = {
+        uid: user.uid,
+        car: "test",
+      };
+      championshipProvider.updateChampionshipDrivers(driverData, event);
     }
+  };
 
-    if (noAvailableSlots) {
-      alert.error("No available slots!");
-      return;
-    }
-
+  const leaveRace = async () => {
+    const user = await userProvider.user;
     const event = leagueData;
+
     const driverData = {
       uid: user.uid,
       car: "test",
     };
-    championshipProvider.updateChampionshipDrivers(driverData, event);
+
+    championshipProvider.removeChampionshipDriver(driverData, event);
   };
 
   const generateEventData = async () => {
@@ -139,6 +174,7 @@ const InnerLeaguePage = () => {
 
   useEffect(() => {
     if (!isEmpty(leagueData)) {
+      checkUserRegistered();
       generateEventData();
       generatedRegisteredDrivers();
     }
@@ -257,9 +293,15 @@ const InnerLeaguePage = () => {
                     </AccordionDetails>
                   </Accordion>
                 </Card>
-                <Button className={classes.btn} onClick={joinRace}>
-                  Register
-                </Button>
+                {driverRegistered ? (
+                  <Button className={classes.btn} onClick={leaveRace}>
+                    Unregister
+                  </Button>
+                ) : (
+                  <Button className={classes.btn} onClick={joinRace}>
+                    Register
+                  </Button>
+                )}
               </div>
             </div>
           </TabPanel>

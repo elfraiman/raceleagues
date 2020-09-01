@@ -20,7 +20,7 @@ const ChampionshipProvider = ({ children }) => {
         response.docs.forEach((document) => {
           // checkes if the enabled boolean on the document is set to true
           // if false it doesn't push to championships.
-          // this lets me add and create championships without worrying about them poping up in the 
+          // this lets me add and create championships without worrying about them poping up in the
           // front page.
           if (document.data().enabled) {
             raceArray.push(document.data());
@@ -59,12 +59,34 @@ const ChampionshipProvider = ({ children }) => {
       });
   };
 
+  const removeChampionshipDriver = (driverData, event) => {
+    const championshipRef = database
+      .collection("championships")
+      .doc(event.name);
+    
+    const eventDriverArray = event.drivers.filter(driver => driver.uid !== driverData.uid);
+
+    console.log(eventDriverArray);
+
+    championshipRef
+      .update({
+        drivers: eventDriverArray,
+      })
+      .then(function() {
+        alert.success("You have successfuly unregistered!");
+      })
+      .catch(function(error) {
+        console.error("Error updating document: ", error);
+      });
+  };
+
   return (
     <ChampionshipContext.Provider
       value={{
         championships: championships,
         fetchChampionship: fetchChampionship,
         updateChampionshipDrivers: updateChampionshipDrivers,
+        removeChampionshipDriver: removeChampionshipDriver,
       }}
     >
       {children}
